@@ -402,3 +402,48 @@ XP关键做法
 #### 软件过程的改进
 
 ![image-20230921100821461](img/21.png)
+
+## 软件建模
+
+
+
+## 需求工程
+
+### 软件需求面临的挑战
+
+1. 用户说不清需求；
+2. 需求表达的二义性问题；
+3. 需求经常变化, 项目没有时限；
+4. 因误解或二义性的需求直到开发后期才发现；
+5. 测试者没有明白产品要做什么；
+6. 产品性能低、使用不方便等用户不满意；
+7. 许多增强性需求未在需求获取阶段提出。
+
+### 需求工程的概念
+
+#### 软件需求 FURPS and FURPS+
+
+功能性需求（F）与非功能性需求（URPS）
+
+|      需求      |                             能力                             |                           具体要求                           |
+| :------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| Functionality  |                   Feature Set,Capabilities                   |                     Generality,Security                      |
+|   Usability    |                   Human Factors,Aesthetics                   |                  Consistency,Documentation                   |
+|  Reliability   |         Frequency/Severity,of Failure,Recoverability         |                 Predictability,Accuracy,MTBF                 |
+|  Performance   |               Speed,Efficiency,>Resource Usage               |                   Throughput,Response Time                   |
+| Supportability | Testability,Extensibility,Adaptability,Maintainability,Compatibility | Configurability,Serviceability,Installability,Localizability,Robustness |
+
+#### Functionality需求
+
+功能、特性和安全性
+
+* 概要功能需求
+* 详细功能需求
+
+#### Usablity需求
+
+可用性
+
+The ease with which software can be learned and
+operated by the intended users
+
