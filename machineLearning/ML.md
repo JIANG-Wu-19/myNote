@@ -4,7 +4,7 @@
 
 ### ML框架
 
-![image-20230913084005731](img\1.png)
+![image-20230913084005731](img/1.png)
 
 ### types of learning problems
 
