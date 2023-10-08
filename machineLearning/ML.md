@@ -199,3 +199,90 @@ $h_\theta(x)$对于输入x，输出y=1的可能性
 $$
 P(y=0|x;\theta)+P(y=1|x;\theta)=1
 $$
+
+#### 分类边界
+
+数形结合可知，$h_{\theta}(x)$形成的一个闭合曲线/曲面作为一个分类边界
+$$
+h_{\theta}(x) \ge c \to y=1
+$$
+
+$$
+h_{\theta}(x) \lt c \to y=0
+$$
+
+#### 损失函数
+
+$$
+P(y=0|x;\theta)=h_{\theta}(x)
+$$
+
+$$
+P(y=1|x;\theta)=1-h_{\theta}(x)
+$$
+
+$$
+p(y|x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}
+$$
+
+$$
+L(\theta)=p(y|\mathbf{X};\theta)=\prod_{i=1}^m p(y^{(i)}|x^{(i)};\theta)=\prod_{i=1}^m (h_\theta(x^{(i)}))^{y^{(i)}}(1-h_\theta(x^{(i)}))^{1-y^{(i)}}
+$$
+
+**Logistic损失函数**
+$$
+\ell(\theta)=-\log L(\theta)=-\left[\sum_{i=1}^m y^{(i)} \log h_\theta(x^{(i)})+(1-y^{(i)}) \log (1-h_\theta(x^{(i)})) \right]
+$$
+**cross entropy 交叉熵**
+$$
+H(p,q)=-\sum_x p(x) \log q(x)
+$$
+通俗来说，$p(x)$是真实样本的分布，$q(x)$是预测样本的分布，cross entropy代表的是两个分布之间的距离，越小说明分布越接近，迭代过程中需要将ce降下来
+
+**分类问题中常用**
+$$
+\operatorname{Cost}\left(h_\theta(x), y\right)=\left\{\begin{aligned}
+-\log \left(h_\theta(x)\right) & \text { if } y=1 \\
+-\log \left(1-h_\theta(x)\right) & \text { if } y=0
+\end{aligned}\right.
+$$
+
+#### 梯度下降
+
+$$
+J(\theta)=-\left[\sum_{i=1}^m y^{(i)} \log h_\theta(x^{(i)})+(1-y^{(i)}) \log (1-h_\theta(x^{(i)})) \right]
+$$
+
+找到合适的参数$\theta$使得$\min_\theta J(\theta)$
+
+repeat{
+$$
+\theta_j=\theta_j-\alpha \frac{\partial}{\partial \theta_j}J(\theta)
+$$
+}
+
+$\frac{\partial}{\partial \theta_j}J(\theta)=(h_\theta(x)-y)x_j$
+
+不可以直接使用线性回归中的平方损失函数
+
+![image-20231008163324478](img/3.png)
+
+黑色的是cross entropy，红色的是square error
+
+#### Multi-class Classification
+
+$$
+h_{\theta_i}=P(y=i|x;\theta_i),i=1,2,3,...
+$$
+
+一对多
+
+* 为每类训练一个逻辑回归分类器$h_{\theta_i}(x)$用来预测$y=i$的可能性
+
+* 对于新输入$x$，做一个预测，选择一个类别$i^*$使得：
+  $$
+  i^*=arg \max_i h_{\theta_i}(x)
+  $$
+
+#### softmax Regression
+
