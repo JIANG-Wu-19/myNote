@@ -286,3 +286,157 @@ $$
 
 #### softmax Regression
 
+$$
+p(y=i|x;\theta)=h_{\theta_i}(x)=\frac{e^{z_i}}{\sum_{j=1}^K e^{z_j}},z_j=(\theta_i)^Tx
+$$
+
+对数似然为
+$$
+L(\theta)=\sum_{i=1}^{m} \log p(y^{(i)}|x^{(i)};\theta)=\sum_{i=1}^{m} \log (\frac{e^zy^{(i)}}{\sum_{j=1}^K e^{z_j}})
+$$
+总损失为
+$$
+\ell(\theta)=-L(\theta)=-\sum_{i=1}^{m} \log (\frac{e^zy^{(i)}}{\sum_{j=1}^K e^{z_j}})=\sum_{i=1}^m \left[\log(\sum_{j=1}^K e^{z_j})-z_{y^(i)}  \right]
+$$
+
+$$
+\hat{y_i}=h_{\theta_i}(x)
+$$
+
+## 模型选择与正则化
+
+### 偏差与方差
+
+偏差bias，方差variance
+$$
+bias(h(x))=E[h(x)-y(x)]
+$$
+
+$$
+var(h(x))=E \lbrace h(x)-E[h(x)] \rbrace
+$$
+
+### 过拟合
+
+如果多项式阶数较大，训练得到的模型对于训练集能正确拟合$J(\theta)=\frac{1}{2m}[h_\theta(x^{(i)}-y^{(i)})^2] \approx  0$，但是对于新的样本预测效果却不好
+
+实际应用中容易出现过拟合
+
+绘制这个模型的学习曲线
+
+通过学习曲线的形态来判断
+
+所谓学习曲线就是训练集得分和验证集得分随着训练样本数的增大而变化的曲线
+
+**欠拟合情况**：随着训练样本数增大，训练集得分和验证集得分收敛，并且两者的收敛值很接近
+
+**过拟合情况**：随着训练样本数增大，训练集得分和验证集得分相差还是很大
+
+### 模型选择
+
+将训练集随机分成两部分：用于训练参数的训练集和用于模型选择的验证集
+
+![image-20231015142857582](img/4.png)
+
+![image-20231015142932617](img/5.png)
+
+![image-20231015142956584](img/6.png)
+
+### 诊断误差和方差
+
+训练误差：$L_{train}(\theta)=\frac{1}{2m} \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2$
+
+验证误差：$L_{val}(\theta)=\frac{1}{2m_{val}} \sum_{i=1}^{m_{val}} (h_\theta(x_{val}^{(i)})-y_{val}^{(i)})^2$
+
+#### 偏差大（underfit欠拟合）
+
+训练误差：大
+
+训练误差与验证误差差别较小
+
+#### 方差大（overfit过拟合）
+
+训练误差：小
+
+验证误差远大于训练误差
+
+![image-20231015143732091](img/7.png)
+
+从图像上可以知道，靠左侧是欠拟合，靠右侧是过拟合
+
+### 解决欠拟合和过拟合问题
+
+#### 欠拟合
+
+核心：增加模型的复杂度
+
+* 收集新的特征
+* 增加多项式组合特征
+* ...
+
+#### 过拟合
+
+* 增加数据
+* 降低模型的复杂度
+  * 减少特征（人为筛选）
+  * 正则化，可降低方差提高偏差
+
+### 正则化线性回归
+
+#### Regularized Linear Regression
+
+$$
+\min_\theta J(\theta)
+$$
+
+$$
+J(\theta)=\frac{1}{2m} \left[ \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2 + \lambda \sum_{j=1}^n \theta_j^2 \right]
+$$
+
+$$
+L(\theta)=\frac{1}{2m} \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
+$$
+
+$$
+J(\theta)=L(\theta)+\lambda R(\theta)
+$$
+
+gradient descent
+
+repeat{
+$$
+\theta_j=\theta_j(1-\alpha \frac{\lambda}{m})-\alpha \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}
+$$
+}
+
+**正则化参数$\lambda$的选择**
+$$
+J(\theta)=\frac{1}{2m} \left[ \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2 + \lambda \sum_{j=1}^n \theta_j^2 \right]
+$$
+
+$$
+L(\theta)=\frac{1}{2m} \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
+$$
+
+#### RegularizedNormal equation
+
+$$
+\theta=\left(X^T X+\lambda\left[\begin{array}{lllll}
+0 & & & & \\
+& 1 & & & \\
+& & 1 & & \\
+& & & \ddots & \\
+& & & & 1
+\end{array}\right]\right) X^{-1} X^T y
+$$
+
+#### Regularized Logistic Regression
+
+$$
+J(\theta)=\left[-\frac{1}{m} \sum_{i=1}^m y^{(i)} \log \left(h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right) \log 1-h_\theta\left(x^{(i)}\right)\right]+\frac{\lambda}{2 m} \sum_{j=1}^n \theta_j^2\right.
+$$
+
+梯度下降同上
+
+
+
