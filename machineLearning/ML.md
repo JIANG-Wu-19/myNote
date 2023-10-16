@@ -430,13 +430,100 @@ $$
 \end{array}\right]\right) X^{-1} X^T y
 $$
 
-#### Regularized Logistic Regression
+### Regularized Logistic Regression
 
 $$
-J(\theta)=\left[-\frac{1}{m} \sum_{i=1}^m y^{(i)} \log \left(h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right) \log 1-h_\theta\left(x^{(i)}\right)\right]+\frac{\lambda}{2 m} \sum_{j=1}^n \theta_j^2\right.
+J(\theta)=\left[-\frac{1}{m} \sum_{i=1}^m y^{(i)} \log \left(h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right) \log (1-h_\theta\left(x^{(i)}\right))\right]+\frac{\lambda}{2 m} \sum_{j=1}^n \theta_j^2\right.
 $$
 
 梯度下降同上
+
+$$
+J(\theta)=L(\theta)+\lambda R(\theta)
+$$
+
+$$
+L(\theta)=\left[-\frac{1}{m} \sum_{i=1}^m y^{(i)} \log (h_\theta(x^{(i)})+(1-y^{(i)}) \log (1-h_\theta(x^{(i)}))\right]
+$$
+
+### 学习曲线
+
+![image-20231016190009923](img/8.png)
+
+如果一个模型测试结果是high bias，使用更多的训练数据并不能改进模型
+
+![image-20231016190147599](img/9.png)
+
+如果一个模型测试结果是high variance，使用更多的训练数据会有效改进模型
+
+### 模型性能评估
+
+* 用训练集训练参数
+
+$$
+\theta^*=a\arg \min_\theta \frac{1}{m} \sum_{i=1}^m \ell(h_\theta(x^{(i)}),y^{(i)})
+$$
+
+* 用验证集选择模型，用于调参（正则化参数、多项式阶数、特征选择）
+* 测试集仅用于性能评估
+
+#### 验证集和测试集
+
+* 验证集和测试集应具有同分布
+* 验证集和测试集的大小
+  * 验证集：1000-10000；应当足够大
+  * 测试集：中小30%；大数据足够大
+
+#### 交叉验证 k-fold cross validation
+
+* 数据集规模较小情况下采用
+* 把数据随机划分为k等份，每次用其中的(k - 1)份做训练，剩下的做验证
+* 计算平均误差（和方差）
+
+## 神经网络与深度学习
+
+### 非线性分类
+
+### The "one learning algorithm" hypothesis
+
+### 神经元模型：Logistic unit
+
+![image-20231016192226609](img/10.png)
+
+### 全连接前馈网络 Fully Connect Feedforward Network
+
+![image-20231016192336825](img/11.png)
+
+![image-20231016192436942](img/12.png)
+
+如果在第j层有$s_j$个units，第j+1层有$s_{j+1}$个units，则$\theta^{(j)}$的维数是$s_j \times s_{j+1}$
+
+FCFN的执行过程
+
+激活函数$g(z)=\frac{1}{1+e^{-z}}$
+
+![image-20231016193208513](img/13.png)
+
+### 前向传播：矩阵表示
+
+![image-20231016193446007](img/14.png)
+$$
+h_\theta(x)=g(\theta^{(2)}g(\theta^{(1)}x))
+$$
+
+### 特征学习
+
+![image-20231016193745129](img/15.png)
+
+### 多层神经网络
+
+![image-20231016193817513](img/16.png)
+
+
+
+
+
+
 
 
 
