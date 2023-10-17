@@ -519,9 +519,45 @@ $$
 
 ![image-20231016193817513](img/16.png)
 
+#### 用神经网络求解XOR/XNOR问题
 
+![image-20231017090005632](img/18.png)
 
+![image-20231017085931923](img/17.png)
 
+![image-20231017090721937](img/19.png)
+
+![image-20231017090803876](img/20.png)
+
+#### 处理多分类问题
+
+![image-20231017091225042](img/21.png)
+
+#### 手写数字识别
+
+![image-20231017091338145](img/22.png)
+
+### 网络结构
+
+$$
+h_\theta(x)=g_L(\theta^{L-1}g_{L-1}(\dots g_2(\theta^{(2)}g_1(\theta^{(1)}x))))
+$$
+
+### DeepLearning:Many hidden layers
+
+### 激活函数
+
+$$
+z=\sum \theta_ix_i +\theta_0
+$$
+
+$$
+\frac{dz}{d\theta_i}=x_i
+$$
+
+$$
+\frac{dJ}{d\theta_i}=\frac{dJ}
+$$
 
 
 
