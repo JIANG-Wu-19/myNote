@@ -556,10 +556,180 @@ $$
 $$
 
 $$
-\frac{dJ}{d\theta_i}=\frac{dJ}
+\frac{dJ}{d\theta_i}=\frac{dJ}{dz} \frac{dz}{d \theta_i}=\frac{dJ}{dz}x_i
 $$
 
+#### sigmoid
 
+![image-20231020160853644](img/23.png)
+$$
+sigmoid:g(x)=\frac{1}{1+e^{-x}}
+$$
 
+1. Saturated neurons “kill” the gradients
+2. Sigmoid outputs are not zerocentered
+3. exp() is a bit compute expensive
 
+#### tanh
+
+![image-20231020161036525](img/24.png)
+$$
+tanh:g(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}
+$$
+
+1. Zero centered (nice)
+
+2. “kill”the gradients
+3. exp() is a bit compute expensive
+
+#### ReLU
+
+![image-20231020161629731](img/25.png)
+$$
+ReLU:g(x)=\max(0,x)
+$$
+
+1. Does not saturate (in +region)
+
+2. Very computationally efficient
+3. Converges much faster than sigmoid/tanh in practice (e.g. 6x)
+4. Actually more biologically plausible than sigmoid
+5. Not zero-centered output
+6. x<0: dead ReLU will never activate => never update
+
+#### Leaky ReLU
+
+![image-20231020161851458](img/26.png)
+$$
+Leaky ReLU:g(x)=\max(0.1x,x)
+$$
+
+1. Does not saturate (in +region)
+
+2. Very computationally efficient
+3. Converges much faster than sigmoid/tanh in practice (e.g. 6x)
+4. Actually more biologically plausible than sigmoid
+5. Not zero-centered output
+6. Will not “die”
+
+$$
+Parametric\ Rectifier\ Linear\ Unit(PReLU):g(x)=\max(\alpha x,x)
+$$
+
+### 损失函数
+
+$$
+l(y,\hat{y})=-\sum_{i=1}^n y_i \log(\hat{y_i})
+$$
+
+### 目标函数
+
+$$
+J(\theta)=L(\theta)+\lambda R(\theta)
+$$
+
+$$
+h_\theta(x) \in \mathbb{R}^K,(h_\theta(x))_k=k^{th}\ output
+$$
+
+$$
+\begin{aligned}
+J(\Theta) & =-\frac{1}{m}\left[\sum_{i=1}^m \log p\left(y^{(i)} \mid x^{(i)} ; \Theta\right)\right]+\frac{\lambda}{2 m} \sum_{l=1}^{L-1} \sum_{i=1}^{s_l} \sum_{j=1}^{s_{l+1}}\left(\Theta_{j i}^{(l)}\right)^2 \\
+& =-\frac{1}{m} \sum_{i=1}^m \sum_{k=1}^K y_k^{(i)} \log \left(h_{\Theta}\left(x^{(i)}\right)\right)_k+\frac{\lambda}{2 m} \sum_{l=1}^{L-1} \sum_{i=1}^{s_l} \sum_{j=1}^{s_{l+1}}\left(\Theta_{j i}^{(l)}\right)^2
+\end{aligned}
+$$
+
+### 梯度下降法
+
+$$
+\min_\theta J(\theta)
+$$
+
+### 梯度计算：反向传播
+
+BackPropagation，BP
+
+#### 链式法则
+
+![image-20231020170049734](img/27.png)
+
+#### 梯度矢量化表示
+
+![image-20231020170507628](img/28.png)
+
+#### Batch gradient descent vs. Stochastic gradient descent
+
+![image-20231020171456260](img/29.png)
+
+![image-20231020171603203](img/30.png)
+
+**Mini-batch gradient descent**
+
+![image-20231020171644520](img/31.png)
+
+* Batch gradient descent
+
+  ```python
+  for i in range(nb_epochs):
+  	params_grad=evaluate_gradient(loss_function,data,params)
+  	params=params-learning_rate*params_grad
+  ```
+
+* Stochastic gradient descent
+
+  ```python
+  for i in range(nb_epochs):
+  	np.random.shuffle(data)
+  	for example in data:
+  		params_grad=evaluate_gradient(loss_function,example,params)
+  		params=params-learning_rate*params_grad
+  ```
+
+* Mini-batch gradient descent
+
+  ```python
+  for i in range(nb_epochs):
+  	np.random.shuffle(data)
+  	for batch in get_batches(data,batch_size=50):
+  		params_grad=evaluate_gradient(loss_function,batch,params)
+  		params=params-learning_rate*params_grad
+  ```
+
+### Stepsize vs. Gradient
+
+![image-20231020172336633](img/32.png)
+
+### Adaptive 学习率
+
+![image-20231020172436170](img/33.png)
+
+#### AdaGrad
+
+$$
+\alpha^t=\frac{\alpha}{\sqrt{t+1}},g_t=\frac{\partial J(\theta^t)}{\partial \theta}
+$$
+
+$$
+\theta^{t+1}=\theta^t-\frac{\alpha^t}{\sigma^t}g_t,\sigma^t=\sqrt{\frac{1}{t+1}\sum_{i=0}^{t}g_i^2}
+$$
+
+$$
+\theta^{t+1}=\theta^t-\frac{\alpha^t}{\sqrt{\sum_{i=0}^tg_i^2}}g_t
+$$
+
+#### RMSProp
+
+$$
+u^0=0
+$$
+
+$$
+u^t=\rho u^{t-1}+(1-\rho)g_t^2
+$$
+
+$$
+\theta^{t+1}=\theta^t-\frac{\alpha}{\sqrt{u^t}}g_t
+$$
+
+#### AdaDelta
 
