@@ -733,3 +733,132 @@ $$
 
 #### AdaDelta
 
+![image-20231021145518518](img/34.png)
+
+#### Momentum
+
+**GD+Momentum**
+$$
+v^0=0
+$$
+
+$$
+v^t=\rho v^{t-1}+\alpha g_t
+$$
+
+$$
+\theta^{t+1}=\theta^t-v^t
+$$
+
+引入速度（前面梯度的加权均值）
+
+![image-20231021145743467](img\35.png)
+
+**Nesterov Momentum**
+
+![image-20231021145908869](img/36.png)
+$$
+v^t=\rho v^{t-1}+\alpha \frac{\partial J(\theta^t+\rho v^{t-1})}{\partial \theta}
+$$
+
+$$
+\theta^{t+1}=\theta^t-v^t
+$$
+
+#### Adam
+
+$$
+m^0=0,v^0=0
+$$
+
+$$
+m^t=\beta_1 m^{t-1}+(1-\beta_1)g_t
+$$
+
+$$
+v^t=\beta_2 v^{t-1}+(1-\beta_2)g_t^2
+$$
+
+$$
+\theta^{t+1}=\theta^t-\frac{\alpha}{\sqrt{v^t+\epsilon}}m%t
+$$
+
+![image-20231021161930422](img\37.png)
+
+#### AdaBelief
+
+![image-20231021162335145](img/38.png)
+$$
+s^t=\beta_2 s^{t-1}+(1-\beta_2)(g_t-m_t)^2
+$$
+
+$$
+\theta^{t+1}=\theta^t-\frac{\alpha}{\sqrt{s^t+\epsilon}}m%t
+$$
+
+Adam or AdaBelief might be the best overall choice
+
+SGD
+
+* usually achieves to find a minimum, but it might take significantly longer
+* is much more reliant on a robust initialization and annealing schedule
+* may get stuck in saddle points rather than local minima
+
+### Additional strategies for optimizing SGD
+
+* Shuffling and Curriculum Learning 打乱数据集和课程学习
+* Early stopping: Early stopping (is) beautiful free lunch (Geoff Hinton) 早停
+* Gradient noise: add noise to each gradient update 梯度噪声
+
+### 二阶方法：牛顿法
+
+迭代规则
+$$
+\theta:=\theta-\frac{f(\theta)}{f'(\theta)}
+$$
+
+$$
+\theta:=\theta-\frac{f(\theta)}{f'(\theta)},\min_\theta J(\theta) \to J'(\theta)=0,f(\theta)=J'(\theta)
+$$
+
+$$
+\theta=\theta-\frac{J'(\theta)}{J''(\theta)}
+$$
+
+$\theta$是矢量，则$\theta:=\theta-H^{-1} \nabla_\theta J(\theta) ,H_{ij}=\frac{\partial^2 \ell(\theta)}{\partial \theta_i \partial \theta_j}$
+
+由于二阶方法需要计算Hessian矩阵，在参数数目较多的情况下计算复杂，目前主要仍采用一阶方法
+
+### Gradient checking
+
+$$
+\frac{\partial J(\theta)}{\partial \theta} \approx \frac{J(\theta+\epsilon)-J(\theta-\epsilon)}{2\epsilon}
+$$
+
+![image-20231021165426644](img/39.png)
+
+### 初始化
+
+不能zero initialization，否则训练出全部相同的神经元
+
+Random initialization (Gaussian with zero mean and 1e-2 standard deviation)，Works ~okay for small networks, but problems with deeper networks
+
+### 数据预处理
+
+![image-20231021165926172](img/40.png)
+
+### 网格结构选择与设计
+
+前一层的输出与后一层的输入需要一致
+
+### 训练网络
+
+* Initialize weights
+* Implement forward propagation
+* Implement code to compute cost function
+* Implement backpropagation code to compute gradient
+* Implement numerical gradient check (disable your gradient checking code before training)
+* Double check that the loss is reasonable
+* Make sure that you can overfit very small portion of the training data
+* Start with small regularization and find learning rate that makes the loss go down
+
