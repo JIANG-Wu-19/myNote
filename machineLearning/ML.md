@@ -862,3 +862,302 @@ Random initialization (Gaussian with zero mean and 1e-2 standard deviation)，Wo
 * Make sure that you can overfit very small portion of the training data
 * Start with small regularization and find learning rate that makes the loss go down
 
+## Support Vector Machines
+
+$$
+\hat{\gamma}^{(i)}=y^{(i)}(w^Tx^{(i)}+b)
+$$
+
+$$
+y=\operatorname{sign}\left(w^T x+b\right)= \begin{cases}+1, & w^T x+b>0 \\ -1, & w^T x+b<0\end{cases}
+$$
+
+要求：
+$$
+y^{(i)}(w^Tx^{(i)}+b)>0
+$$
+
+### 最大间隔分类器(Max Margin Classifier)
+![image-20231025082744416](img/41.png)
+$$
+w^Tx^++b=+1,w^Tx^-+b=-1,x^+=x^-+\lambda w
+$$
+
+$$
+margin=\parallel x^+-x^- \parallel
+$$
+
+$$
+w^T(x^+-x^-)=2
+$$
+
+$$
+\lambda=\frac{2}{w^Tw}
+$$
+
+$$
+margin=\parallel x^+-x^-\parallel =\parallel \lambda w \parallel=\frac{2}{\parallel w \parallel}
+$$
+
+$$
+margin:\max_w \frac{2}{\parallel w \parallel} \to \min_w \frac{1}{2}\parallel w \parallel^2
+$$
+
+### The Primal Hard SVM
+
+假设数据线性可分，即$y^{(i)}(w^Tx^{(i)}+b) \ge 1$
+
+*关于函数间隔为什么可设置为1，参考[机器学习SVM中关于函数间隔为什么可以设置为1？](https://www.zhihu.com/question/64568136)，这里面写的比较详细*
+$$
+\begin{aligned}
+\min _{w, b} & \frac{1}{2}\|w\|^2 \\
+\text { s.t. } & y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1, \quad i=1, \ldots, m
+\end{aligned}
+$$
+典型的二次规划问题
+
+#### Equality constraint
+
+$$
+\max_x f(x)
+$$
+
+$$
+\text { s.t. }  g(x)=0
+$$
+
+$$
+\nabla f(x^*,y^*)+\lambda \nabla g(x^*,y^*)=0,\beta \neq 0
+$$
+
+定义Lagrange函数$\mathcal L(x,y,\lambda)=f(x,y)+\lambda g(x,y)$
+
+令$\nabla_{x,y} \mathcal L=0$得到上式
+
+令$\nabla_{\lambda} \mathcal L=0$得到约束条件$g(x,y)=0$
+
+![image-20231025091620975](img/42.png)
+
+#### Inequality constraint
+
+$$
+\max_x f(\mathbf x)
+$$
+
+$$
+\text{s.t.} g(\mathbf x) \ge 0
+$$
+
+$$
+\mathcal{L}(\mathbf x,\lambda)=f(\mathbf x)+\lambda g(\mathbf x)
+$$
+
+无效：
+
+最优解本身满足约束$g(\mathbf x) >0$，约束条件不起作用，即
+$$
+\lambda=0
+$$
+有效：
+
+最优解再约束条件边界上，$g(\mathbf x) =0$，此时$\nabla g(\mathbf x)$方向必定与$\nabla f(\mathbf x)$相反，即
+$$
+\nabla f(\mathbf x)+\lambda \nabla g(\mathbf x)=0,\lambda >0
+$$
+两种情况都有$\lambda g(\mathbf x)=0$
+
+#### Lagrange Multiplier
+
+##### equality
+
+$$
+\min_w f(w)
+$$
+
+$$
+\text{s.t.} h_i(w)=0,i=1,\dots,l
+$$
+
+$$
+\mathcal{L} (w,\beta)=f(w)+\sum_{i=1}^l \beta_ih_i(w),\beta_i:\mathbf{Lagrange\ multipliers}
+$$
+
+$$
+\frac{\partial \mathcal L}{\partial w}=0;\frac{\partial \mathcal L}{\partial \beta_i}=0
+$$
+
+##### inequality&equality
+
+$$
+\min_w f(w)
+$$
+
+$$
+\text{s.t.}\ g_i(w) \le 0,i=1,\dots,k
+$$
+
+$$
+\ \ \ \ \ h_i(w)=0,i=1,\dots,l
+$$
+
+$$
+\mathcal L(w,\alpha,\beta)=f(w)+\sum_{i=1}^k \alpha_i g_i(w)+\sum_{i=1}^l \beta_i g_i(w)
+$$
+
+
+$$
+\text{s.t.}\ \alpha_i g_i(w)=0,i=1,\dots,k
+$$
+
+$$
+\ \ \ \alpha_i \ge 0,i=1,\dots,k
+$$
+
+$$
+\theta_{\mathcal{P}}(w)=\max _{\alpha, \beta: \alpha_i \geq 0} \mathcal{L}(w, \alpha, \beta)
+$$
+
+给出$w$，如果$w$违反了最初的约束(e.g. $g_i(w)<0\ or \ h_i(w) \neq 0 \ for \ some \ i$)，应当能给出
+$$
+\theta_{\mathcal{P}}(w)=\max _{\alpha, \beta: \alpha_i \geq 0} \mathcal{L}(w, \alpha, \beta)=\max _{\alpha, \beta: \alpha_i \geq 0}  f(w)+\sum_{i=1}^k \alpha_i g_i(w)+\sum_{i=1}^l \beta_i g_i(w)=\infin
+$$
+
+#### Primal vs. Dual
+
+##### Primal
+
+$$
+\theta_{\mathcal{P}}(w)=\max _{\alpha, \beta: \alpha_i \geq 0} \mathcal{L}(w, \alpha, \beta),\mathcal L(w,\alpha,\beta)=f(w)+\sum_{i=1}^k \alpha_i g_i(w)+\sum_{i=1}^l \beta_i g_i(w)
+$$
+
+$$
+\theta_{\mathcal{P}}(w)= \begin{cases}f(w) & \text { if } w \text { satisfies primal constraints } \\ \infty & \text { otherwise. }\end{cases}
+$$
+
+$$
+\min_w \theta_{\mathcal{P}}(w)=\min_w \max _{\alpha, \beta: \alpha_i \geq 0} \mathcal{L}(w, \alpha, \beta)
+$$
+
+##### Dual
+
+$$
+\theta_{\mathcal D}(\alpha,\beta)=\min_w \mathcal{L}(w, \alpha, \beta)
+$$
+
+$$
+\max _{\alpha, \beta: \alpha_i \geq 0} \min_w \mathcal{L}(w, \alpha, \beta)
+$$
+
+##### 弱对偶性
+
+$$
+d^*=\max _{\alpha, \beta: \alpha_i \geq 0} \min_w \mathcal{L}(w, \alpha, \beta) \le \min_w \max _{\alpha, \beta: \alpha_i \geq 0} \mathcal{L}(w, \alpha, \beta)=p^*
+$$
+
+##### 强对偶性
+
+$$
+d^*=\max _{\alpha, \beta: \alpha_i \geq 0} \min_w \mathcal{L}(w, \alpha, \beta) = \min_w \max _{\alpha, \beta: \alpha_i \geq 0} \mathcal{L}(w, \alpha, \beta)=p^*
+$$
+
+under certain conditions:
+
+* f is convex(its Hessian is positive semi-definite)
+* $g_i$'s are convex set
+* $h_i$'s are affine, $h_i(w)=a_i^Tw+b_i$
+
+#### KKT Conditions
+
+$$
+\min_w f(w)
+$$
+
+$$
+\text{s.t.}\ g_i(w) \le 0,i=1,\dots,k
+$$
+
+$$
+\ \ \ \ \ h_i(w)=0,i=1,\dots,l
+$$
+
+$$
+\mathcal L(w,\alpha,\beta)=f(w)+\sum_{i=1}^k \alpha_i g_i(w)+\sum_{i=1}^l \beta_i g_i(w)
+$$
+
+$$
+\begin{aligned}
+\frac{\partial}{\partial w_i} \mathcal{L}\left(w^*, \alpha^*, \beta^*\right) & =0, \quad i=1, \ldots, n \\
+\frac{\partial}{\partial \beta_i} \mathcal{L}\left(w^*, \alpha^*, \beta^*\right) & =0, \quad i=1, \ldots, l \\
+\alpha_i^* g_i\left(w^*\right) & =0, \quad i=1, \ldots, k \\
+g_i\left(w^*\right) & \leq 0, \quad i=1, \ldots, k \\
+\alpha^* & \geq 0, \quad i=1, \ldots,
+\end{aligned}
+$$
+
+#### SVM:from Primal to Dual
+
+$$
+\begin{aligned}
+\min _{w, b} & \frac{1}{2}\|w\|^2 \\
+\text { s.t. } & y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1, \quad i=1, \ldots, m
+\end{aligned}
+$$
+
+**Lagrange function**
+$$
+\mathcal L(w,b,a)=\frac{1}{2}\|w\|^2-\sum_{i-1}^{m}\alpha_i[y^{(i)}\left(w^T x^{(i)}+b\right)-1]
+$$
+
+$$
+\nabla_w \mathcal L(w,b,a)=w-\sum_{i-1}^{m}\alpha_i y^{(i)}x^{(i)}=0 \Rightarrow w^*=\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}
+$$
+
+$$
+\frac{\partial}{\partial b}\mathcal L(w,b,a)=\sum_{i=1}^m \alpha_i^*y^{(i)}=0
+$$
+
+将上述条件带入$\mathcal L$中，得到
+$$
+\mathcal{L}(w, b, \alpha)=\sum_{i=1}^m \alpha_i-\frac{1}{2} \sum_{i, j=1}^m y^{(i)} y^{(j)} \alpha_i \alpha_j\left(x^{(i)}\right)^T x^{(j)}
+$$
+**solving the Dual:The SMO Algorithm**
+$$
+\max_\alpha W(\alpha)=\sum_{i=1}^m \alpha_i-\frac{1}{2} \sum_{i, j=1}^m y^{(i)} y^{(j)} \alpha_i \alpha_j\left(x^{(i)}\right)^T x^{(j)}
+$$
+
+$$
+\text{s.t.}\ \alpha_i \ge0,i=1,\dots,m
+$$
+
+$$
+\sum_{i=1}^m \alpha_i y^{(i)}=0
+$$
+
+![image-20231025112704921](img/43.png)
+
+### The Dual Hard SVM
+
+$$
+\max_\alpha W(\alpha)=\sum_{i=1}^m \alpha_i-\frac{1}{2} \sum_{i, j=1}^m y^{(i)} y^{(j)} \alpha_i \alpha_j\left(x^{(i)}\right)^T x^{(j)}
+$$
+
+$$
+\text{s.t.}\ \alpha_i \ge0,i=1,\dots,m
+$$
+
+$$
+\sum_{i=1}^m \alpha_i y^{(i)}=0
+$$
+
+得到$\alpha^*$后代入$w^*=\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}$得到最优解$w^*$
+
+![image-20231025113129561](img/44.png)
+
+![image-20231025113202692](img/45.png)
+
+![image-20231025113224064](img/46.png)
+
+![image-20231025113255025](img/47.png)
+
+* 一般情况下只有少数训练样本对应的Lagrange Multiplier大于零(支持向量)，分类面则是由这些支持向量决定
+* 决策时只需计算新样本与所有支持向量的内积

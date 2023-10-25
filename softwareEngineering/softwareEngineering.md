@@ -750,7 +750,7 @@ operated by the intended users
 
 **常用符号**
 
-![image-20231024161127649](E:\myNote\softwareEngineering\img\29.png)
+![image-20231024161127649](img/29.png)
 
 #### 数据流图
 
@@ -764,17 +764,17 @@ operated by the intended users
 
 描述输入数据流到输出数据流的变换(即加工)过程，用于对系统的功能建模，基本元素包括：
 
-![image-20231024161430439](E:\myNote\softwareEngineering\img\30.png)
+![image-20231024161430439](img/30.png)
 
 e.g. 图书订购系统DFD
 
-![image-20231024161742480](E:\myNote\softwareEngineering\img\31.png)
+![image-20231024161742480](img/31.png)
 
 **数据流图的扩充符号**
 
 描述一个加工的多个数据流之间的关系
 
-![image-20231024161918825](E:\myNote\softwareEngineering\img\32.png)
+![image-20231024161918825](img/32.png)
 
 **绘制方法**
 
@@ -784,7 +784,7 @@ e.g. 图书订购系统DFD
 
 **分层数据流图**
 
-![image-20231024162201836](E:\myNote\softwareEngineering\img\33.png)
+![image-20231024162201836](img/33.png)
 
 * 在多层数据流图中，顶层流图仅包含一个处理，它代表被开发系统。它的输入流是该系统的输入数据，输出流是系统所输出数据
 * 底层流图是指其处理不需再做分解的数据流图，它处在最底层
@@ -820,7 +820,7 @@ e.g. 图书订购系统DFD
 
 ##### 数据字典描述符号
 
-![image-20231024164033623](E:\myNote\softwareEngineering\img\34.png)
+![image-20231024164033623](img/34.png)
 
 ##### 数据流条目的描述内容
 
@@ -891,19 +891,19 @@ e.g. 图书订购系统DFD
   * 动作桩(action stub)：列出所有可能采取的动作，如发出发货单等，每行写一个动作
   * 动作条目(action entry)：列出各种条件组合下应采取的动作
 
-  e.g.![image-20231024170051741](E:\myNote\softwareEngineering\img\35.png)
+  e.g.![image-20231024170051741](img/35.png)
 
 * 判定树：判定表的变种，它本质上与判定表是相同的，只是表示形式不同
 
-  e.g.![image-20231024170119698](E:\myNote\softwareEngineering\img\36.png)
+  e.g.![image-20231024170119698](img/36.png)
 
 #### 实体-关系图
 
 描述数据字典中数据之间的关系
 
-![image-20231024170312798](E:\myNote\softwareEngineering\img\37.png)
+![image-20231024170312798](img/37.png)
 
-![image-20231024170337998](E:\myNote\softwareEngineering\img\38.png)
+![image-20231024170337998](img/38.png)
 
 ### 面向数据流的需求分析过程
 
@@ -931,7 +931,7 @@ e.g. 图书订购系统DFD
 
 #### 面向数据流的软件设计过程
 
-![image-20231024170813083](E:\myNote\softwareEngineering\img\39.png)
+![image-20231024170813083](img/39.png)
 
 ### 结构设计-概要设计
 
@@ -950,11 +950,11 @@ e.g. 图书订购系统DFD
   * 为了方便，有时常用直线替代箭头，此时，表示位于上方的模块调用位于下方的模块
 * 数据(data)：模块调用时需传递的参数可通过在调用箭头旁附加一个小箭头和数据名来表示
 
-![image-20231024171808595](E:\myNote\softwareEngineering\img\40.png)
+![image-20231024171808595](img/40.png)
 
 #### 结构图中的辅助符号
 
-![image-20231024171852610](E:\myNote\softwareEngineering\img\41.png)
+![image-20231024171852610](img/41.png)
 
 #### 数据流图到结构图的映射
 
@@ -970,7 +970,7 @@ e.g. 图书订购系统DFD
 * 变换：内部形式的信息由变换中心进行处理
 * 输出：然后沿着输出路径经过格式转换、组成物理块、缓冲处理等辅助性加工后变成输出信息送到系统外
 
-![image-20231024172335556](E:\myNote\softwareEngineering\img\42.png)
+![image-20231024172335556](img/42.png)
 
 ##### 变换分析
 
@@ -978,7 +978,7 @@ e.g. 图书订购系统DFD
 
 1. 划定输入流和输出流的边界，确定变换中心
 
-   ![image-20231024172611179](E:\myNote\softwareEngineering\img\44.png)
+   ![image-20231024172611179](img/44.png)
 
 2. 进行第一级分解：将DFD映射成变换型的程序结构
 
@@ -988,11 +988,11 @@ e.g. 图书订购系统DFD
      * 例如，每条输入或输出路径画一个模块，每个主要变换功
        能各画一个模块
 
-   e.g.![image-20231024172820255](E:\myNote\softwareEngineering\img\45.png)
+   e.g.![image-20231024172820255](img/45.png)
 
 3. 进行第二级分解：将DFD中的加工映射成结构图中的一个适当的模块
 
-   ![image-20231024172947192](E:\myNote\softwareEngineering\img\46.png)
+   ![image-20231024172947192](img/46.png)
 
 4. 标注输入输出信息：根据DFD，在初始结构图上标注模块之间传递的输入信息和输出信息
 
@@ -1002,7 +1002,7 @@ e.g. 图书订购系统DFD
 
 事务中心的任务是：接收输入数据(即事务)；分析每个事务的类型；根据事务类型选择执行一条动作路径
 
-![image-20231024172437805](E:\myNote\softwareEngineering\img\43.png)
+![image-20231024172437805](img/43.png)
 
 ##### 事务分析
 
@@ -1015,7 +1015,7 @@ e.g. 图书订购系统DFD
 * 发送模块：根据输入事务的类型，选择一个动作路径控制模块
 * 动作路径控制模块：完成相应的动作路径所执行的子功能
 
-![image-20231024173107440](E:\myNote\softwareEngineering\img\47.png)
+![image-20231024173107440](img/47.png)
 
 **分析步骤**
 
@@ -1025,13 +1025,13 @@ e.g. 图书订购系统DFD
    * 接受部分（包括接受路径）
    * 发送部分（包括全部动作路径）
 
-   ![image-20231024173230136](E:\myNote\softwareEngineering\img\48.png)
+   ![image-20231024173230136](img/48.png)
 
 2. 画出SC图框架
 
    * DFD图的三个部分分别映射为事务控制模块，接受模块和动作发送模块
 
-   ![image-20231024173259040](E:\myNote\softwareEngineering\img\49.png)
+   ![image-20231024173259040](img/49.png)
 
 3. 分解和细化接受分支和发送分支
 
@@ -1066,33 +1066,33 @@ e.g. 图书订购系统DFD
 
 ##### 重复编码技术
 
-![image-20231024174115266](E:\myNote\softwareEngineering\img\50.png)
+![image-20231024174115266](img/50.png)
 
 ##### 设标志量技术
 
-![image-20231024174158786](E:\myNote\softwareEngineering\img\51.png)
+![image-20231024174158786](img/51.png)
 
 ##### 状态变量法
 
-![image-20231024174238351](E:\myNote\softwareEngineering\img\52.png)
+![image-20231024174238351](img/52.png)
 
 #### 程序流程图
 
-![image-20231024174310179](E:\myNote\softwareEngineering\img\53.png)
+![image-20231024174310179](img/53.png)
 
 **常用符号**
 
-![image-20231024174342914](E:\myNote\softwareEngineering\img\54.png)
+![image-20231024174342914](img/54.png)
 
 #### 盒图（N-S图）
 
-![image-20231024174450499](E:\myNote\softwareEngineering\img\55.png)
+![image-20231024174450499](img/55.png)
 
 #### PAD图
 
-![image-20231024174525729](E:\myNote\softwareEngineering\img\56.png)
+![image-20231024174525729](img/56.png)
 
-![image-20231024174558977](E:\myNote\softwareEngineering\img\57.png)
+![image-20231024174558977](img/57.png)
 
 #### PDL
 
