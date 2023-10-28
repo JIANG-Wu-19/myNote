@@ -1161,3 +1161,96 @@ $$
 
 * 一般情况下只有少数训练样本对应的Lagrange Multiplier大于零(支持向量)，分类面则是由这些支持向量决定
 * 决策时只需计算新样本与所有支持向量的内积
+
+### From Hard SVM to Soft SVM
+
+$$
+(w^*_{hard},b^*_{hard})=\arg\min_{w,b}\frac{1}{2}\|w\|^2
+$$
+
+$$
+\text { s.t. }  y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1, \quad i=1, \ldots, m
+$$
+
+$$
+(w^*_{hard},b^*_{hard})=\arg\min_{w,b} \sum_{i=1}^m \ell_{0-\infin}(y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1)+\frac{1}{2}\|w\|^2
+$$
+
+$$
+J(\theta)=L(\theta)+\lambda R(\theta)
+$$
+
+### From Logistic Loss to Hinge Loss
+
+$$
+z=\theta^Tx=w^Tx+b
+$$
+
+$$
+\text { Logistic Loss: } \ell=\left\{\begin{array}{ll}
+-\log \left(\frac{1}{1+e^{-z}}\right)=\log \left(1+e^{-z}\right), & y=+1 \\
+-\log \left(1-\frac{1}{1+e^{-z}}\right)=\log \left(1+e^z\right), & y=-1
+\end{array} \quad \Rightarrow \ell=\log \left(1+e^{-y z}\right)\right.
+$$
+
+$$
+\text{Hinge\ Loss}:\ell=\max(1-yz,0)
+$$
+
+### The Primal Soft SVM problem
+
+Logistic loss
+$$
+(w^*_{hard},b^*_{hard})=\arg\min_{w,b} \sum_{i=1}^m \ell_{0-\infin}(y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1)+\frac{1}{2}\|w\|^2
+$$
+hinge loss
+$$
+(w^*_{soft},b^*_{soft})=\arg\min_{w,b} C\sum_{i=1}^m \max(1-y^{(i)}\left(w^T x^{(i)}+b\right),0 )+\frac{1}{2}\|w\|^2
+$$
+**松弛因子**
+$$
+\xi_i=\max(1-y^{(i)}\left(w^T x^{(i)}+b\right),0 )
+$$
+**惩罚因子**$C$
+$$
+(w^*_{soft},b^*_{soft})=\arg\min_{w,b,\xi} C\sum_{i=1}^m \frac{1}{2}\|w\|^2+C\sum_{i=1}^m \xi_i
+$$
+
+$$
+\text { s.t. }  y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1-\xi_i, \quad i=1, \ldots, m
+$$
+
+$$
+\xi_i \ge 0,i=1,\dots,m
+$$
+
+### The Dual Soft SVM
+
+**primal**
+$$
+(w^*_{soft},b^*_{soft})=\arg\min_{w,b,\xi} C\sum_{i=1}^m \frac{1}{2}\|w\|^2+C\sum_{i=1}^m \xi_i
+$$
+
+$$
+\text { s.t. }  y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1-\xi_i, \quad i=1, \ldots, m
+$$
+
+$$
+\xi_i \ge 0,i=1,\dots,m
+$$
+
+**dual**
+$$
+\max_\alpha W(\alpha)=\sum_{i=1}^m \alpha_i-\frac{1}{2} \sum_{i, j=1}^m y^{(i)} y^{(j)} \alpha_i \alpha_j\left(x^{(i)}\right)^T x^{(j)}
+$$
+
+$$
+\text{s.t.}\ 0 \le \alpha_i \le C,i=1,\dots,m
+$$
+
+$$
+\sum_{i=1}^m \alpha_i y^{(i)}=0
+$$
+
+对比hard，求解多一个惩罚因子C
+
