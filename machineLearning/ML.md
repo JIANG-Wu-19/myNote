@@ -1226,6 +1226,27 @@ $$
 
 ### The Dual Soft SVM
 
+$$
+(w^*_{soft},b^*_{soft})=\arg\min_{w,b,\xi} C\sum_{i=1}^m \frac{1}{2}\|w\|^2+C\sum_{i=1}^m \xi_i
+$$
+
+$$
+\mathcal L(w,b,\xi,\alpha,r)=\frac{1}{2} w^Tw+C\sum_{i=1}^m \xi_i-\sum_{i=1}^m \alpha_i[y^{(i)}(x^Tw+b)-1+\xi_i]-\sum_{i=1}^m r_i\xi_i
+$$
+
+求偏导=0后
+$$
+w^*=\sum_{i=1}^m \alpha_iy^{(i)}x^{(i)}
+$$
+
+$$
+\sum_{i=1}^m \alpha_i^* y^{(i)}=0
+$$
+
+$$
+C=\alpha_i+r_i
+$$
+
 **primal**
 $$
 (w^*_{soft},b^*_{soft})=\arg\min_{w,b,\xi} C\sum_{i=1}^m \frac{1}{2}\|w\|^2+C\sum_{i=1}^m \xi_i
@@ -1254,3 +1275,54 @@ $$
 
 对比hard，求解多一个惩罚因子C
 
+#### KTT conditions
+
+![image-20231103165520948](img/48.png)
+
+#### Support vectors in Soft SVM
+
+$$
+(w^*_{soft},b^*_{soft})=\arg\min_{w,b,\xi} C\sum_{i=1}^m \frac{1}{2}\|w\|^2+C\sum_{i=1}^m \xi_i
+$$
+
+$$
+\text { s.t. }  y^{(i)}\left(w^T x^{(i)}+b\right) \geq 1-\xi_i, \quad i=1, \ldots, m
+$$
+
+$$
+\xi_i \ge 0,i=1,\dots,m
+$$
+
+![image-20231103171213776](img/49.png)
+
+The dual soft SVM 是一个二次规划问题，通过常用的QP算法求解，规模正比于训练样本数
+
+使用SMO算法
+
+![image-20231103171443347](img/50.png)
+
+![image-20231103171554751](img/51.png)
+
+#### SMO implementation
+
+![image-20231103172215902](img/52.png)
+
+![image-20231103172243757](img/53.png)
+
+### Kernel
+
+通过引入松弛因子，Soft SVM能处理部分“特异点”outlier导致的线性不可分问题
+
+如果数据本身是线性不可分的,显式将数据变换到新的空间(如采用极坐标、多项式升维)，使其线性可分，
+
+$x \to \phi(x)$
+
+对应SVM分类标准：$y=sign(\sum_{i=1}^m \alpha_i y^{(i)}<\phi(x^{(i)}),\phi(x)>+b)$
+
+* 只有少数的$\alpha >0$
+* 只需要知道测试样本x与支持所有支持向量的内积，无需明确知道对应的映射
+
+直接定义核函数计算内积
+$$
+k(x,z)=<\phi(x),\phi(z)>=\phi(x)^T\phi(z)
+$$
