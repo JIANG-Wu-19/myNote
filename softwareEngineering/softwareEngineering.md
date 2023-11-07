@@ -1164,7 +1164,7 @@ $$
 
 #### 对象
 
-![image-20231026084209729](E:\myNote\softwareEngineering\img\58.png)
+![image-20231026084209729](img/58.png)
 
 对象是具有相同状态（属性）的一组操作的集合
 $$
@@ -1206,7 +1206,7 @@ $$
 继承是指能够直接获得已有的性质和特征，而不必重复定义它们。继承是子类自动地共享基类中定义的数据和方法的机制。
 当类等级为树形结构时，类的继承是单继承；当允许一个类有多个父类时，类的继承是多重继承。但是，使用多重继承时要注意避免二义性
 
-![image-20231026085952380](E:\myNote\softwareEngineering\img\59.png)
+![image-20231026085952380](img/59.png)
 
 #### 多态性
 
@@ -1221,13 +1221,13 @@ $$
 
 UML建模
 
-![image-20231102082403892](E:\myNote\softwareEngineering\img\60.png)
+![image-20231102082403892](img/60.png)
 
 从功能和行为对问题进行抽象，主要建模包括:用例图，活动图，类图，时序图，通信图和包图
 
 #### 用例图
 
-![image-20231102083513164](E:\myNote\softwareEngineering\img\61.png)
+![image-20231102083513164](img/61.png)
 
 要素：执行者、用例、关系（包含、扩展、泛化）系统框常被省略
 
@@ -1235,7 +1235,7 @@ UML建模
 
 #### 活动图
 
-![image-20231102083713826](E:\myNote\softwareEngineering\img\62.png)
+![image-20231102083713826](img/62.png)
 
 * 动作：行为的基本单元
 * 控制流：动作之间的过程
@@ -1245,7 +1245,7 @@ UML建模
 
 带泳道的活动图，已明确责任
 
-![image-20231102084231206](E:\myNote\softwareEngineering\img\63.png)
+![image-20231102084231206](img/63.png)
 
 #### 类图
 
@@ -1257,17 +1257,17 @@ UML建模
 * 数据结构（属性）
 * 行为（操作）
 
-![image-20231102084502941](E:\myNote\softwareEngineering\img\64.png)
+![image-20231102084502941](img/64.png)
 
 * 继承/泛化：is-a关系，用空心箭头实线表示
 
 * 实现：类实现接口，用带空心箭头虚线表示
 
-  ![image-20231102092200621](E:\myNote\softwareEngineering\img\68.png)
+  ![image-20231102092200621](img/68.png)
 
 * 依赖：一个类对另一个类局域变量、方法的形参，或者对静态方法的调用，虚线箭头表示，临时的非结构性关系
 
-  ![image-20231102092117988](E:\myNote\softwareEngineering\img\67.png)
+  ![image-20231102092117988](img/67.png)
 
 * 关联：一个类的实例与另外一个类的特定实例存在固定关系，被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量，实线箭头表示
 
@@ -1275,17 +1275,20 @@ UML建模
 
 * 组合：强调了整体与部分的生命周期是一致的，用带实心菱形(整体的一端)的实线箭头表示
 
-基数![image-20231102090912808](E:\myNote\softwareEngineering\img\65.png)
+基数![image-20231102090912808](img/65.png)
 
 聚合和组合的区别在于整体和部分的生命周期是否独立
 
-![image-20231102091004309](E:\myNote\softwareEngineering\img\66.png)
+* 聚合的整体和部分之间在生命周期上没有什么必然的联系
+* 组合关系中，整体与部分是不可分的，整体的生命周期结束也就意味着部分的生命周期结束
+
+![image-20231102091004309](img/66.png)
 
 > 参考[关联、聚合、组合的区别 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/359672087)
 
 #### 时序图
 
-![image-20231102092304288](E:\myNote\softwareEngineering\img\69.png)
+![image-20231102092304288](img/69.png)
 
 * 交互使用：ref
 * 循环：loop
@@ -1298,27 +1301,207 @@ UML建模
 
 两对象对应类之间存在关联关系时，对象之间存在一条通信路径，称为link
 
-![image-20231102092753551](E:\myNote\softwareEngineering\img\70.png)
+![image-20231102092753551](img/70.png)
 
 #### 包图
 
 UML提供一种称为包的组织元素
 
-![image-20231102092845212](E:\myNote\softwareEngineering\img\71.png)
+![image-20231102092845212](img/71.png)
 
 ### 面向对象分析建模
 
+#### 概念
+
 use case技术
 
-![image-20231102093004525](E:\myNote\softwareEngineering\img\72.png)
+![image-20231102093004525](img/72.png)
 
 use-case模型，识别actor和use case
 
-#### 用例建模
+#### 建模步骤
 
-#### 建立概念模型
+##### 用例建模
 
-#### 用例分析
+###### use-case模型的组成
+
+![image-20231107161539379](img/73.png)
+
+###### actor
+
+与系统交互的系统外的某些人或某些东西
+
+* 最终用户
+* 外界软件系统
+* 外界硬件设备
+
+如何识别actor
+
+* 谁需要在系统的帮助下完成自己的任务？
+* 需要谁去执行系统的核心功能？
+* 需要谁去完成系统的管理和维护？
+* 系统是否需要和外界的硬件或软件系统进行交互？
+
+###### use case 
+
+Actor想使用系统去做的事
+
+如何识别use case
+
+每个actor的目标和需求是什么?
+
+* actor希望系统提供什么功能？
+* actor 将创建、存取、修改和删除数据吗？
+* actor是否要告诉系统外界的事件？
+* actor 需要被告知系统中的发生事件吗?
+
+一个用例定义了和actor之间的一次完整对话
+
+###### 用例图
+
+通信-关联
+
+* Actor和use case 间的通信渠道
+* 用一条线表示
+* 箭头表示谁启动通信
+
+![image-20231107162257193](img/74.png)
+
+用例规约
+
+* Name
+* Brief description
+* Flow of Events
+* Relationships
+* Activity diagrams
+* Use-Case diagrams
+* Special requirements
+* Pre-conditions
+  前置条件
+* Post-conditions
+  后置条件
+* Other diagrams
+
+![image-20231107162500369](img/75.png)
+
+###### 事件流
+
+执行者与用例之间对话期间发生的基本活动
+
+* 一个基本流
+  * 执行用例时“通常”会发生的事件
+  * 从开始到结束的成功的事件流程
+* 多个备选流
+  * 基本事件流的“绕行道”
+  * 相关的可选或异常特征的行为
+  * 正常行为的各种变形
+
+每个用例的事件流动作都对应一个活动
+
+###### 用例模型的优化
+
+![image-20231107163655411](img/76.png)
+
+用例间关系
+
+* include包含
+
+  多个用例存在共同行为，可以分提炼一个新的用例。
+
+  执行include：到达插入点时执行包含用例
+
+  ![image-20231107164556438](img/77.png)
+
+* extend扩展
+
+  若用例的部分行为是可选的，可分离形成扩展用例
+
+  执行extend：当到达扩展点并且扩展条件为真时执行
+
+  ![image-20231107164645507](img/78.png)
+
+* generalization泛化
+
+  若多个用例在行为和结构上具有共同点，可以分离出形成父用例
+
+  * 在父用例中描述通用的共享的行为
+  * 在子用例中描述特殊的行为
+  * 共享共同的目标
+
+  ![image-20231107170419113](img/79.png)
+
+##### 建立概念模型
+
+###### 识别conceptual class
+
+概念类业务和需求建模会揭示系统必须处理的核心概念，它是设计模型的核心要素
+
+* Use a conceptual class category list（分类法）
+
+  ![image-20231107170915920](img/80.png)
+
+* Finding conceptual classes with Noun Phrase（名词提出和过滤法）
+
+  * Use use-case flow of events as input
+  * Underline noun clauses in the use-case flow of events
+  * Remove redundant candidates
+  * Remove vague candidates
+  * Remove actors (out of scope)
+  * Remove implementation constructs（与实现有关的）
+  * Remove attributes (save for later)
+  * Remove operations
+
+* Use analysis patterns, which are existing conceptual models created by experts（已有的分析模式）
+
+  * using published resources such as **Analysis Patterns**[Fowler96] and **Data Model Patterns** [Hay96].
+
+一个错误：把原本是类的实体当作属性来处理.
+
+解决方法：
+
+**If X is not a number or text in the real world, X is probably a conceptual class, not an attribute.**
+
+###### 建立conceptual class之间的关系
+
+**关系种类**
+
+* Association（关联）
+  * Aggregation（聚合）
+  * Composition（组合）
+* Inheritance/Generalization（继承/泛化）
+* Dependency（依赖）
+
+![image-20231107171409785](img/81.png)
+
+###### 增加conceptual class的属性（画类图）
+
+识别出概念类的主要属性，可以有遗漏，在后续的分析与设计中，这些属性会逐渐补全
+
+同时可以识别出概念类的部分操作。在概念模型中，类的属性比操作更为重要
+
+##### 用例分析
+
+###### 识别出用例实现
+
+![image-20231107173250804](img/82.png)
+
+用例实现充当了从以需求为中心到以设计为中心转移的桥梁， 用例与用例实现的关系是依赖关系的衍型《realize 》
+
+![image-20231107173339107](img/83.png)
+
+###### 针对每个用例实现
+
+**识别出分析类**
+
+MVC设计模式
+
+* view————边界类boundary
+* model———实体类entity
+* control———控制类control
+
+
+
+
 
 
 
