@@ -1496,14 +1496,95 @@ Actor想使用系统去做的事
 MVC设计模式
 
 * view————边界类boundary
+
+  boundary class：The interaction between the external environment and the internal operation of the system
+
 * model———实体类entity
+
+  entity class 是系统的关键抽象
+
+  Store and manage information in the system.
+
+  * 用户接口类
+  * 系统接口类
+  * 设备接口类
+
+  One boundary class per actor/use-case pair
+
+  执行者和用例之间的一条通信关联对应一个边界类Use-
+
 * control———控制类control
 
+  控制类用于描述一个或几个用例所特有的事件流控制行为，如事务管理器、资源协调器和错误处理器
+
+  使用或规定若干实体类的内容，协调这些实体类的行为
+
+  identify one control class per use case
+
+![image-20231109093544344](img/84.png)
 
 
 
+##### 完成用例分析
 
+###### 建立时序图，生成通信图
 
+以用例作为研究对象，分析类的实例作为行为载体，通过消息传递的方式对用例场景进行分析，构建出时序图、通信图和类图。
+
+![image-20231109104334401](img/85.png)
+
+* Sequence Diagram
+
+  * Time oriented view of object interaction
+  * The diagram shows:
+    * The objects participating in the interaction.
+    * The sequence of messages exchanged.
+
+  ![image-20231109104557920](img/86.png)
+
+  ![image-20231109105117867](img/87.png)
+
+* Communication Diagram
+
+  * Structural view of messaging objects
+  * The communication diagram shows:
+    * The objects participating in the interaction.
+    * Links between the objects.
+    * Messages passed between the objects.
+
+  ![image-20231109105207350](img/88.png)
+
+  ![image-20231109105236721](img/89.png)
+
+###### 对照通信图建立类图，完善每个分析类的属性和操作
+
+Relationship for every link
+
+![image-20231109105420028](img/90.png)
+
+#### 补充一：构建对象模型-原文分析法
+
+面向对象分析，就是抽取和整理用户需求并建立问题域精确模型的过程。
+
+发现和改正原始陈述中的二义性和不一致性，补充遗漏的内容，从而使需求陈述更完整、更准确。
+
+抽象出目标系统的本质属性，并用模型准确地表示出来。通过建立分析模型能够纠正在开发早期对问题域的误解。
+
+复杂问题的对象模型的五个层次
+
+![image-20231109105628454](img/91.png)
+
+对象模型通常由下述5个层次组成： 主题层(Subject)、类与对象层(class-object)、结构层(structure)、属性层(attribute)和服务层(service)
+
+上述5个层次对应着在面向对象分析过程中建立对象模型的5项主要活动：
+
+* 找出类与对象(Finding Class-object)
+* 识别结构(Recognising Structure)
+* 识别主题(Recognising Subject)
+* 定义属性(Defining attribute)
+* 定义服务(Defining service)
+
+这5项活动没有必要顺序完成，也无须彻底完成一项工作以后再开始另外一项工作。
 
 
 
