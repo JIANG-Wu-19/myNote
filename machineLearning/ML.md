@@ -1615,3 +1615,169 @@ $$
 
 ![image-20231110172728641](img/74.png)
 
+## 集成学习
+
+构建多个学习器一起结合来完成具体的学习任务
+
+![image-20231122090210698](img/75.png)
+
+![image-20231122090243070](img/76.png)
+
+通过将多个学习器进行结合，常可获得比单一学习器显著优越的泛化性能，对“弱学习器” 尤为明显
+
+集成学习分类
+
+* 个体学习器间存在强依赖关系，必须串行生成的序列化方法。代表：Boosting (AdaBoost,Gradient Boosting Machine)
+* 个体学习器间不存在强依赖关系，可同时生成的并行化方法。代表：Bagging和随机森林（Random Forest）
+
+### Boosting
+
+#### AdaBoost
+
+![image-20231122092206246](img/77.png)
+
+* 基分类器：$h_t$
+* 强分类器：$H$
+* 每次在学习$h_t$的时候，更关注分类器$h_{t-1}$错分的样本
+* 从偏差-方差分解的角度看，AdaBoost主要关注降低错误率（即降低偏差），因此AdaBoost能基于分类性能相当弱的学习器构建出分类性能很强的分类器。
+
+加性模型：
+$$
+H(x)=\sum_{t=1}^{T}\alpha_{t}h_{t}(x)
+$$
+![image-20231122093600297](img/78.png)
+
+**AdaBoost算法的推导**
+
+假设函数：$H(x)=\sum_{t=1}^T\alpha_th_t(x)$
+
+目标函数：
+$$
+\begin{aligned}
+(\alpha_{t},h_{t})& =\arg\min_{\alpha,h}\frac{1}{m}\sum_{i=1}^{m}\exp\left[-y^{(i)}\left(H_{t-1}(x^{(i)})+\alpha h(x^{(i)})\right)\right]  \\
+&=\arg\min\limits_{\alpha,h}\frac{1}{m}\sum\limits_{i=1}^{m}\exp\left[-y^{(i)}\left(\sum\limits_{\tau=1}^{t-1}\alpha_{\tau}h_{\tau}(x^{(i)})+\alpha h(x^{(i)})\right)\right]
+\end{aligned}
+$$
+损失函数：$\ell(H(x),y)=\exp(-yH(x))$
+
+第一个分类器$h_1$直接基于初始数据分布用基学习算法可得。此后迭代生产$h_t$和对应的权重$\alpha_th_t$最小化指数损失
+$$
+\begin{aligned}\ell_t(\alpha_t)&=E_{x\sim\mathcal{D}_t}\exp[-y\alpha_th_t(x)]\\&=e^{-\alpha_t}P_{x\sim\mathcal{D}_t}[h_t(x)=y]+e^{\alpha_t}P_{x\sim\mathcal{D}_t}[h_t(x)\neq y]=(1-\epsilon_t)e^{-\alpha_t}+\epsilon_te^{\alpha_t}\end{aligned}
+$$
+令$\frac{\partial\ell_{t}}{\partial\alpha_{t}}=-e^{-\alpha_{t}}(1-\epsilon_{t})+e^{\alpha_{t}}\epsilon_{t}=0$，有$\alpha_t=\frac{1}{2}\log\left(\frac{1-\epsilon_t}{\epsilon_t}\right)$
+
+得到分类器$H_{t-1}$后，分类器$h_t$应能纠正$H_{t-1}$的错误，即应最小化
+
+$y \in \{ -1,+1 \},h_t(x) \in \{ -1,+1 \}$
+$$
+\ell_{t}(H_{t-1}+h_{t}|\mathcal{D})=E_{x\sim\mathcal{D}}\exp[-y(H_{t-1}(x)+h_{t}(x))]=E_{x\sim\mathcal{D}}e^{-yH_{t-1}(x)}e^{-yh_{t}(x)}
+$$
+根据泰勒公式有
+$$
+e^{-yh_t(x)}\approx1-yh_t(x)+\frac{1}{2}y^2h_t^2(x)=\frac{3}{2}-yh_t(x)
+$$
+
+$$
+\begin{aligned}
+h_{t}(x)& =\arg\operatorname*{min}_{h}E_{x\sim\mathcal{D}}e^{-yH_{t-1}(x)}e^{-yh_{t}(x)}  \\
+&\approx\arg\operatorname*{max}_{h}E_{x\sim\mathcal{D}}e^{-yH_{t-1}(x)}yh_{t}(x)=\arg\operatorname*{max}_{h}E_{x\sim\mathcal{D}}\left[\frac{e^{-yH_{t-1}(x)}}{E_{x\sim\mathcal{D}}e^{-yH_{t-1}(x)}}yh_{t}(x)\right]
+\end{aligned}
+$$
+
+令$\mathcal D_t$表示分布
+$$
+\mathcal{D}_{t}(x)=\frac{\mathcal{D}(x)e^{-yH_{t-1}(x)}}{E_{x\sim\mathcal{D}}e^{-yH_{t-1}(x)}}
+$$
+根据期望定义
+$$
+\begin{aligned}
+h_{t}(x)& =\arg\max_{h}E_{x\sim\mathcal{D}_{t}}[yh_{t}(x)]  \\
+&=\arg\min_{h}E_{x\sim\mathcal{D}_{t}}\mathbb{I}[y\neq h_{t}(x)]
+\end{aligned}
+$$
+$\mathcal D_t$和$\mathcal D_{t+1}$有
+$$
+\begin{aligned}
+\mathcal{D}_{t+1}(x)& =\frac{\mathcal{D}(x)e^{-yH_{t}(x)}}{E_{x\sim\mathcal{D}}e^{-yH_{t}(x)}}  \\
+&=\frac{\mathcal{D}(x)e^{-yH_{t-1}(x)}e^{-y\alpha_{t}h_{t}(x)}}{E_{x\sim\mathcal{D}}e^{-yH_{t}(x)}} \\
+&=\mathcal{D}_{t}(x)e^{-y\alpha_{t}h_{t}(x)}\frac{E_{x\sim\mathcal{D}}e^{-yH_{t-1}(x)}}{E_{x\sim\mathcal{D}}e^{-yH_{t}(x)}}
+\end{aligned}
+$$
+选择基学习器$h_t$
+
+* decision stump $h_{s,i,\theta}=s\operatorname{sign}(x_i-\theta)$
+* 三个参数：feature i，threshold $\theta$，direction s
+* 2D平面上水平或垂直线
+
+#### Gradient Boosting Machine
+
+采用加性模型，但是可以采用其他任意损失$\ell$
+
+目标函数：
+$$
+(\alpha_{t},h_{t})=\arg\min_{h,\alpha}\frac{1}{m}\sum_{i=1}^{m}\ell\left(\sum_{\tau=1}^{t-1}\alpha_{\tau}h_{\tau}(x^{(i)})+\alpha h(x^{(i)}),y^{(i)}\right)
+$$
+
+##### Gradient Boosting Decision Tree
+
+采用决策树（回归树）作为基学习器
+
+针对不同问题使用不同的损失函数：
+
+* 用指数损失函数的分类问题
+* 用平方误差损失函数的回归问题
+
+$$
+H(x)=\sum_{t=1}^{T}\alpha_{t}h_{t}(x)
+$$
+
+GBM的思想是$h_t$应能沿着损失函数负梯度降低损失函数的值
+
+分类器$h_t$常采用CART树，每次学习一颗CART树，去拟合样本余量
+$$
+\tilde{y}^{(i)}=-\left[\frac{\partial\ell(H,y^{(i)})}{\partial H}\right]_{H=H_{t-1}(x^{(i)})}
+$$
+![image-20231122111700294](img/79.png)
+
+![image-20231122111730500](img/80.png)
+
+为了消除过拟合，加入正则项
+$$
+\begin{gathered}
+(\alpha_{t},h_{t}) =\arg\min_{\alpha,h}\frac{1}{m}\sum_{i=1}^{m}\ell\left(\sum_{\tau=1}^{t-1}\alpha_{\tau}h_{\tau}(x^{(i)})+\alpha h(x^{(i)}),y^{(i)}\right)+\lambda R\left(h\right) \\
+=\arg\min\limits_{\alpha,h}\frac{1}{m}\sum\limits_{i=1}^{m}\ell\left(H_{t-1}(x^{(i)})+\alpha h(x^{(i)}),y^{(i)}\right)+\lambda R\left(h\right) 
+\end{gathered}
+$$
+
+##### AdaBoost vs GBM
+
+adaboost
+
+![image-20231122111908950](img/81.png)
+
+GBM
+
+![image-20231122111934222](img/82.png)
+
+### Bagging
+
+![image-20231122112028139](img/83.png)
+
+自助采样(Bootstrap Sampling):指任何一种有放回的均匀抽样，也就是说，每当选中一个样本，它等可能地被再次选中并被再次添加到训练集中
+
+Bagging: 利用自助采样得到T组训练样本集，分别利用这些训练样本集训练T个分类器(CART or SVM or others)，最后进行投票集成
+
+从Bias-Variance分解的角度看，Bagging主要关注降低方差
+
+![image-20231122112124395](img/84.png)
+
+### Random Forest
+
+![image-20231122112200167](img/85.png)
+
+### 决策融合策略
+
+![image-20231122112224820](img/86.png)
+
+
+
