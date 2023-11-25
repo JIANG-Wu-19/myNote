@@ -1779,5 +1779,10 @@ Bagging: 利用自助采样得到T组训练样本集，分别利用这些训练�
 
 ![image-20231122112224820](img/86.png)
 
+## 聚类
 
+* 同一簇中的样本尽可能的相似，而不同簇中的样本尽可能不同
+* 高类内相似性(high intraclass similarity)
+* 低类间相似性(low interclass similarity)
+* 属于最典型的非监督学习方法
 
