@@ -1,4 +1,10 @@
-machineLearning/**/.ipynb_checkpoints
 **/*.pdf
 **/.idea
 **/*.lnk
+
+computerArchitecture/lab/*.exe
+computerArchitecture/lab/report
+computerArchitecture/lab/report/*.pdf
+computerArchitecture/lab/report/*.docx
+
+machineLearning/**/.ipynb_checkpoints
