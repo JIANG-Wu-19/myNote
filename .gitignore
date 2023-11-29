@@ -3,7 +3,6 @@
 **/*.lnk
 
 computerArchitecture/lab/*.exe
-computerArchitecture/lab/report
 computerArchitecture/lab/report/*.pdf
 computerArchitecture/lab/report/*.docx
 
