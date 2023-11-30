@@ -1517,7 +1517,7 @@ Relationship for every link
 6. 顺序内聚sequential cohesion
 7. 功能内聚functional cohesion
 
-![image-20231121162244488](E:\myNote\softwareEngineering\img\95.png)
+![image-20231121162244488](img/95.png)
 
 ##### 耦合
 
@@ -1529,7 +1529,7 @@ Relationship for every link
 6. 公共耦合common coupling
 7. 内容耦合content coupling
 
-![image-20231121162405277](E:\myNote\softwareEngineering\img\96.png)
+![image-20231121162405277](img/96.png)
 
 ### 软件设计的质量
 
@@ -1625,7 +1625,7 @@ Relationship for every link
 * 视图View：根据模型生成提供给用户的交互界面，不同的视图可以对相同的数据产生不同的界面。
 * 控制器Control：接收用户输入，通过调用模型获得响应，并通知视图进行用户界面的更新。
 
-![image-20231121170911645](E:\myNote\softwareEngineering\img\97.png)
+![image-20231121170911645](img/97.png)
 
 ##### Pipes and Filter
 
@@ -1633,19 +1633,19 @@ each component has a set of inputs and a set of outputs
 
 A component reads streams of data on its inputs and produces streams of data on its output.
 
-![image-20231121171516537](E:\myNote\softwareEngineering\img\98.png)
+![image-20231121171516537](img/98.png)
 
 Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 
 ##### 层次架构风格
 
-![image-20231121171706705](E:\myNote\softwareEngineering\img\99.png)
+![image-20231121171706705](img/99.png)
 
-![image-20231121171734524](E:\myNote\softwareEngineering\img\100.png)
+![image-20231121171734524](img/100.png)
 
 ##### Three Tiers三层架构
 
-![image-20231121171805010](E:\myNote\softwareEngineering\img\101.png)
+![image-20231121171805010](img/101.png)
 
 * 表示层：负责向用户呈现界面，并接收用户请求发送给业务逻辑层；
 * 业务逻辑层：负责执行业务逻辑以处理用户请求，并调用数据访问层提供的持久性操作；
@@ -1665,25 +1665,25 @@ Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 
 黑板架构专门针对没有确定的解决方法的问题，例如信号处理和模式识别，它通过多个知识源的协作来解决问题，而这种协作完全是状态驱动的，因此各个知识源具有公平的机会获取并更新黑板中的状态数据
 
-![image-20231121172113684](E:\myNote\softwareEngineering\img\102.png)
+![image-20231121172113684](img/102.png)
 
 ##### 微内核风格
 
 微内核概念来源与操作系统领域。微内核是提供了操作系统核心功能的内核，它只需占用很小的内存空间即可启动，并向用户提供了标准接口，以使用户能够按照模块化的方式扩展其功能。现在大多数操作系统都采用了微内核架构。
 
-![image-20231121172147537](E:\myNote\softwareEngineering\img\103.png)
+![image-20231121172147537](img/103.png)
 
 ##### 解释器架构
 
 解释器架构用于仿真当前不具备的计算环境，通常包含四个组成部分：用来解释伪码程序的解释引擎、包含待解释程序的内存、解释引擎的控制状态，以及被仿真程序的当前状态：
 
-![image-20231121172228975](E:\myNote\softwareEngineering\img\104.png)
+![image-20231121172228975](img/104.png)
 
 ##### 基于规则的架构
 
 基于规则的架构是一种解释器架构风格，它将人类专家的问题解决知识编码成规则，这些规则在系统执行计算满足指定的条件时被执行或激活，通过规则不断地被执行和激活，最终使得问题被解决。由于这些规则不能被计算机系统直接执行，因此需要通过解释器来解释它们。
 
-![image-20231121172534973](E:\myNote\softwareEngineering\img\105.png)
+![image-20231121172534973](img/105.png)
 
 #### 设计模式
 
@@ -1699,13 +1699,13 @@ Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 
 类模式（静态关系）、对象模式（动态关系）
 
-![image-20231121172638922](E:\myNote\softwareEngineering\img\106.png)
+![image-20231121172638922](img/106.png)
 
 ##### Bridge模式
 
 将抽象部分与其实现部分分离，在运行时连接起来（不是编译时绑定），使它们可以独立变化。
 
-![image-20231121172848216](E:\myNote\softwareEngineering\img\107.png)
+![image-20231121172848216](img/107.png)
 
 #### 框架
 
@@ -1782,7 +1782,7 @@ Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 * 时间长度：系统响应时间长会使用户感到不安和沮丧。人的一般容忍度为15秒。
 * 可变性：稳定的响应时间（如1秒）比不定的响应时间（如0.1秒到2.5秒）要好。用户往往比较敏感，总是关心界面背后是否发生了异常。
 
-![image-20231123093247979](E:\myNote\softwareEngineering\img\108.png)
+![image-20231123093247979](img/108.png)
 
 #### 帮助设施
 
@@ -1815,7 +1815,7 @@ Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 
 #### 菜单和命令交互
 
-![image-20231123093559424](E:\myNote\softwareEngineering\img\109.png)
+![image-20231123093559424](img/109.png)
 
 #### 可访问性
 
@@ -1823,15 +1823,15 @@ Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 
 #### 国际化
 
-![image-20231123093650668](E:\myNote\softwareEngineering\img\110.png)
+![image-20231123093650668](img/110.png)
 
-![image-20231123093814871](E:\myNote\softwareEngineering\img\113.png)
+![image-20231123093814871](img/113.png)
 
 #### 合理的布局和合理的色彩
 
-![image-20231123093717830](E:\myNote\softwareEngineering\img\111.png)
+![image-20231123093717830](img/111.png)
 
-![image-20231123093747171](E:\myNote\softwareEngineering\img\112.png)
+![image-20231123093747171](img/112.png)
 
 
 
@@ -2017,6 +2017,271 @@ Linux的Shell程序可以看做是典型的管道与过滤器架构的例子
 设计模型的元素很多都是在分析模型中使用的UML图。差别在于这些图被精化和细化为设计的一部分，并且提供了更多的与实现相关的特殊细节，突出了架构的结构和风格、架构内存在的构件以及构件和外界之间的接口。
 
 ### 面向对象设计模型
+
+#### UML相关模型图
+
+##### 构件图
+
+构件是比类的封装粒度更大的软件重用结构，并通过接口向构件的用户提供服务。
+
+* 内部类以紧耦合方式完成相对独立的功能；
+* 有明确的供给接口和需求接口；
+* 构件是可配置的；
+* 构件是可组装的；
+
+![image-20231130092846310](img/114.png)
+
+![image-20231130092913978](C:\Users\HP\AppData\Roaming\Typora\typora-user-images\image-20231130092913978.png)
+
+##### 部署图
+
+软件的部署方案定义了系统的执行架构，即将软件制品分配到不同的节点上运行
+
+![image-20231130093026039](img/116.png)
+
+##### 状态机
+
+描述类的行为特性。
+
+核心元素：**状态、转移、事件**
+
+![image-20231130093108568](img/117.png)
+
+#### 架构设计
+
+[架构设计的4+1视图：场景视图、逻辑视图、物理视图、流程视图和开发视图 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/590865345)
+
+[架构设计4+1视图的作用与关系 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/112531852)
+
+##### 4+1架构视图
+
+![image-20231130093233342](img/118.png)
+
+##### 逻辑视图设计
+
+Logical view
+
+软件的逻辑结构，用于支持功能性需求。
+
+![image-20231130093354196](img/119.png)
+
+##### 进程视图设计
+
+process view
+
+软件的进程架构，针对非功能性需求
+
+构成进程的任务是彼此相互分隔的控制线程，这个软件被划分成这样一组彼此独立的任务。（部署图）
+
+![image-20231130093543116](img/120.png)
+
+process和thread
+
+process
+
+* Provides heavyweight flow of control
+* Is stand-alone
+* Can be divided into individual threads
+
+thread
+
+* Provides lightweight flow of control
+* Runs in the context of an enclosing process
+
+![image-20231130093801450](img/121.png)
+
+##### 开发视图设计
+
+implementation view/实现视图
+
+软件的开发架构，即如何分解成实现单元，是需求分配的基础也是开发组织结构的基础。
+
+如图水平分割方案，6个包分配给6个开发组且处于架构的不同层次，开发组可按技术层次分配人员。
+
+下图垂直分割方案，按业务逻辑在多个开发组分配任
+务，每个开发组必须具备综合开发能力。
+
+![image-20231130102032780](img/122.png)
+
+##### 物理视图设计
+
+deployment view/部署视图
+
+软件的物理架构，针对非功能性需求的可用性、可靠性、可扩展性等。（部署图）
+
+![image-20231130102320464](img/123.png)
+
+##### 场景视图设计
+
+use-case view
+
+场景是用例的实例，将4个视图有机第联系起来。它是发现架构元素的动力，担负起验证和说明的角色
+
+![image-20231130102517910](img/124.png)
+
+
+
+需要多少视图？
+
+* 简化模型
+* 不是所有系统都需要上面的所有视图
+  * 单处理器：无需物理视图/部署视图
+  * 单进程：无需进程视图
+  * 小项目：无需实现视图
+* 添加视图
+  * 数据视图
+  * 安全视图
+
+#### 包和子系统设计
+
+##### 类与包
+
+* 类
+
+  A description of a set of objects that share the same responsibilities, relationships, operations, attributes, and semantics
+
+* 包
+
+  A general purpose mechanism for organizing elements into groups
+
+  A model element which can contain other model elements
+
+##### 包设计原则
+
+* 重用-发布等价：重用粒度等于发布粒度；
+* 共同重用：包中所有类一起被重用；
+* 共同封闭：包中的所有类对同类型的变更封闭；
+* 无环依赖：包之间无环依赖结构；
+* 稳定依赖：包应该依赖比他更稳定的包；
+* 稳定抽象：最稳定的包即最抽象，不稳定包是具体包。
+
+![image-20231130103435204](img/125.png)
+
+![image-20231130103451116](img/126.png)
+
+##### 子系统与接口
+
+接口
+
+Realizes one or more interfaces that define its behavior
+
+![image-20231130103951744](img/127.png)
+
+子系统
+
+* 完全封装行为
+* 使用清晰的接口实现独立的功能
+* 对多个实现变体进行建模
+
+![image-20231130104337279](img/128.png)
+
+##### 包与子系统
+
+* 子系统
+  * 提供行为
+  * 完全封装内容
+  * 能够轻易被替换
+* 包
+  * 不提供行为
+  * 不完全封装内容
+  * 可能不能被轻易替换
+
+![image-20231130104608540](img/129.png)
+
+##### 子系统的使用
+
+* 子系统能够被用于将系统拆分成多个独立的部分
+  * ordered, configured, or delivered
+  * 可开发的，只要接口保持不变
+  * 在一串分布式计算节点上部署
+  * 更改不破坏系统的其他部分
+* 也能被用于：
+  * 将系统拆分为可以对关键资源提供限制安全的单元
+  * 在设计中表现现有产品或外部系统
+
+#### 类设计
+
+##### 单一职责
+
+![image-20231130105156907](img/130.png)
+
+##### 里氏替换
+
+[面向对象基础设计原则：3.里氏替换原则 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/158386715#:~:text=里氏替换原则（The Liskov Substitution,Principle，LSP）是由Barbara Liskov女士于1988年提出的，其定义为：“如果对于类型S的每个对象O1存在类型T的对象O2，那么对于所有定义了T的程序P来说，当用O1替换 O2并且S是T的子类型时，P的行为不会改变”。)
+
+[细说 里氏替换原则 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/268574641)
+
+如果对于类型S的每个对象O1存在类型T的对象O2，那么对于所有定义了T的程序P来说，当用O1替换 O2并且S是T的子类型时，P的行为不会改变
+
+![image-20231130105214727](img/131.png)
+
+##### 依赖倒置
+
+![image-20231130105247475](img/132.png)
+
+##### 接口隔离
+
+![image-20231130105446463](img/133.png)
+
+##### 开发-关闭原则
+
+![image-20231130105509590](img/134.png)
+
+#### 持久化设计
+
+1. 实体对象建模；
+2. 数据库设计；
+3. 持久化框架。
+
+### 面向对象设计过程
+
+从分析类到设计元素
+
+![image-20231130105838497](img/135.png)
+
+#### 识别设计元素
+
+* 如果满足以下要求，一个分析类直接映射到一个设计类
+  * 一个简单类
+  * 表示单一的逻辑抽象
+* 更复杂的分析类
+  * 拆分成多个类
+  * 成为一个包
+  * 成为一个子系统
+  * 参与组合
+
+##### 候选子系统
+
+* 分析类可能演变成子系统
+  * 类提供复杂服务或者工具
+  * 边界类（用户接口和外部系统接口）
+* 设计中现有的产品和外部系统
+  * 通讯软件
+  * 数据库连接支持
+  * 类型和数据结构
+  * 共有的工具
+  * 特定应用产品
+
+##### 子系统设计过程
+
+1. 对子系统职责进行定义，即接口的定义；
+2. 通过职责分配确定子系统中的元素，由构件等元素来实现职责；
+3. 对子系统中各元素进行设计，即类设计（静态结构和动态结构）；
+4. 确定子系统间的依赖关系。
+
+![image-20231130111607451](img/136.png)
+
+#### 确定架构风格，设计整体结构
+
+#### 构件级设计
+
+
+
+
+
+
+
+
 
 
 
