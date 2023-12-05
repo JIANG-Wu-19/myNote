@@ -2273,7 +2273,87 @@ Realizes one or more interfaces that define its behavior
 
 #### 确定架构风格，设计整体结构
 
+##### 识别架构风格
+
+* layers
+* model-view-controller（MVC）
+* pipes and filters
+* blackboard
+
+![image-20231205172420878](img/137.png)
+
+##### 对架构层级建模
+
+Architectural layers can be modeled using stereotyped packages.
+
+![image-20231205172634868](img/138.png)
+
+##### 对设计元素进行分层和分包
+
+* Partitioning Considerations
+  * Coupling and cohesion
+  * User organization
+  * Competency and/or skill areas
+  * System distribution
+  * Secrecy
+  * Variability
+
+##### 持久化设计模式
+
+* Describe Persistence-Related Behavior
+  * Modeling Transactions
+  * Writing Persistent Objects
+  * Reading Persistent Objects
+  * Deleting Persistent Objects
+
+![image-20231205173044256](img/139.png)
+
 #### 构件级设计
+
+##### 更新use-case Realization
+
+![image-20231205173239165](img/140.png)
+
+![image-20231205173308270](img/141.png)
+
+![image-20231205173401659](img/142.png)
+
+![image-20231205173430130](img/143.png)
+
+encapsulating subsystem interactions
+
+##### 子系统的设计
+
+类似于系统的设计，对每个接口的每个操作设计交互图和VOPC类图
+
+![image-20231205173910372](img/144.png)
+
+##### 类的设计
+
+1. 创建设计类：将分析类映射成设计类；
+2. 定义操作：实现单一的职责；
+3. 定义方法：对操作的内部实现进行描述；
+4. 定义状态：描述对象的状态对行为的影响，将对象的属性和操作关联起来；
+5. 定义属性：包括方法中的参数、对象的状态等；
+6. 定义依赖：类与类之间的存在关系，非结构关系；
+7. 定义关联：对关联关系的细化，包括聚合与组合、导向性、多重性、关联类；
+8. 形成设计类的规格说明书。
+
+###### 优化UI类
+
+UI边界类
+
+![image-20231205174120116](img/145.png)
+
+###### 优化Control类
+
+* 是否该被拆分
+
+###### 优化entity类
+
+
+
+
 
 
 
