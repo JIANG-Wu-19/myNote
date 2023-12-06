@@ -1841,7 +1841,8 @@ $$
 
 ![image-20231201175512564](img/90.png)
 
-一维高斯分布
+##### 一维高斯分布
+
 $$
 x\in\mathbb{R},x\sim\mathcal{N}(\mu,\sigma^{2})
 $$
@@ -1850,7 +1851,8 @@ $$
 \begin{aligned}p(x;\mu,\sigma)&=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\\E(x)=\mu\\\text{var}(x)=\sigma^2\end{aligned}
 $$
 
-多维高斯分布
+##### 多维高斯分布
+
 $$
 x\in\mathbb{R}^{n},x\sim\mathcal{N}(\mu,\Sigma)
 $$
@@ -1861,7 +1863,42 @@ $$
 
 ![image-20231201180211230](img/91.png)
 
+#### 贝叶斯决策
 
+##### 全概率公式
+
+$$
+p(x)=\sum_{j=1}^Kp(x|z=j)p(z=j)
+$$
+
+![image-20231206090919898](E:\myNote\machineLearning\img\92.png)
+
+##### 贝叶斯分类器
+
+$$
+h(x)=\arg\max_kp(z=k|x)=\arg\max_k\frac{p(x|z=k)p(z=k)}{\sum_jp(x|z=j)p(z=j)}
+$$
+
+##### 高斯贝叶斯分类器
+
+$$
+h(x)=\arg\max_{k}\frac{p(x;\mu_{k},\Sigma_{k})p(z=k)}{\sum_{j}p(x;\mu_{j},\Sigma_{j})p(z=j)}
+$$
+
+$$
+p(x|z=j)=p(x;\mu_j,\Sigma_j)=\frac{1}{(2\pi)^{n/2}\sqrt{|\Sigma_j|}}\exp\left(-\frac{1}{2}(x-\mu_j)^T\Sigma_j^{-1}(x-\mu_j)\right)
+$$
+
+##### 朴素贝叶斯分类器
+
+各特征相互独立
+$$
+p(z=k|x)=\frac{p(x|z=k)p(z=k)}{p(x)}=\frac{p(z=k)}{p(x)}\prod_{i=1}^{n}p(x_{i}|z=k)
+$$
+
+$$
+h(x)=\arg\max_kp(z=k)\prod_{i=1}^np(x_i|z=k)
+$$
 
 ### K-means
 
@@ -1944,7 +1981,56 @@ $$
 
 ### Gaussian Mixture Model
 
-#### 
+将复杂的概率密度函数表示为若干简单高斯概率分布密度函数的加权和
+$$
+\quad p(x)=\sum_{k=1}^{K}\alpha_{k}p(x;\mu_{k},\Sigma_{k})
+$$
+$\mu_k,\sum_k$分别为第k个高斯概率分布密度函数的参数，$\alpha_k$为加权系数，$\sum_{k=1}^K \alpha_k=1$
+
+#### 与kmeans区别
+
+kmeans采用均值表示聚类簇，GMM用一个高维高斯模型表示一个聚类簇
+
+#### GMM聚类
+
+$$
+p(x)=\sum_{k=1}^K\alpha_kp(x;\mu_k,\Sigma_k)=\sum_{k=1}^Kp(z=k)p(x|z=k)
+$$
+
+$$
+\alpha_k=p(z=k)
+$$
+
+$$
+p(x|z=k)=p(x;\mu_k,\Sigma_k)=\frac{1}{(2\pi)^{n/2}\sqrt{|\Sigma_k|}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)\right)
+$$
+
+贝叶斯定理得出后验概率
+$$
+p(z^{(j)}=k|x^{(j)})=\frac{p(x^{(j)}|z^{(j)}=k)p(z^{(j)}=k)}{\sum_lp(x^{(j)}|z^{(j)}=l)p(z^{(j)}=l)}=\frac{\alpha_kp(x^{(j)};\mu_k,\Sigma_k)}{\sum_l\alpha_lp(x^{(j)};\mu_l,\Sigma_l)}
+$$
+得到簇标记后完成聚类
+
+最大化对数似然
+$$
+\ell(\theta)=\log\prod_{j=1}^mp(x^{(j)})=\sum_{j=1}^m\log\left(\sum_{k=1}^K\alpha_kp(x^{(j)};\mu_k,\Sigma_k)\right)
+$$
+
+为了求$\mu_k$
+
+$\frac{\partial\ell}{\partial\mu_{k}}=0$得到
+$$
+\begin{aligned}\sum_{j=1}^m\frac{\alpha_kp(x^{(j)};\mu_k,\Sigma_k)}{\sum_{l=1}^K\alpha_lp(x^{(j)};\mu_l,\Sigma_l)}(x^{(j)}-\mu_k)&=0\end{aligned}
+$$
+令
+$$
+\begin{aligned}\gamma_{jk}=p(z^{(j)}=k|x^{(j)})=\frac{\alpha_{k}p(x^{(j)};\mu_{k},\Sigma_{k})}{\sum_{l=1}^{K}\alpha_{l}p(x^{(j)};\mu_{l},\Sigma_{l})}\end{aligned}
+$$
+得到
+$$
+\mu_k=\frac{\sum_{j=1}^m\gamma_{jk}x^{(j)}}{\sum_{j=1}^m\gamma_{jk}}
+$$
+
 
 
 
