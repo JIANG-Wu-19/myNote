@@ -1900,6 +1900,42 @@ $$
 h(x)=\arg\max_kp(z=k)\prod_{i=1}^np(x_i|z=k)
 $$
 
+#### 矩阵微分
+
+##### 行列式的微分
+
+$$
+\frac{\partial|\Sigma|}{\partial\Sigma}=|\Sigma|(\Sigma^{-1})^{T}
+$$
+
+##### 矩阵逆的微分
+
+$$
+\frac{\partial x^T\Sigma^{-1}y}{\partial\Sigma}=-\Sigma^{-T}xy^T\Sigma^{-T}
+$$
+
+#### 凸函数 Convex Function
+
+$$
+f(tx_1+(1-t)x_2)\leq tf(x_1)+(1-t)f(x_2)
+$$
+
+=>$f''(x) \ge 0, \forall x$
+
+=>矢量则Hessian矩阵H半正定$H \ge 0$
+
+**严格凸**
+$$
+f(tx_1+(1-t)x_2)\lt tf(x_1)+(1-t)f(x_2)
+$$
+矢量则Hessian矩阵H半正定$H \gt 0$
+
+凸函数中
+$$
+E(f(X)) \ge f(E(X))
+$$
+
+
 ### K-means
 
 #### 输入
@@ -2016,7 +2052,7 @@ $$
 \ell(\theta)=\log\prod_{j=1}^mp(x^{(j)})=\sum_{j=1}^m\log\left(\sum_{k=1}^K\alpha_kp(x^{(j)};\mu_k,\Sigma_k)\right)
 $$
 
-为了求$\mu_k$
+##### 求$\mu_k$
 
 $\frac{\partial\ell}{\partial\mu_{k}}=0$得到
 $$
@@ -2030,6 +2066,72 @@ $$
 $$
 \mu_k=\frac{\sum_{j=1}^m\gamma_{jk}x^{(j)}}{\sum_{j=1}^m\gamma_{jk}}
 $$
+
+##### 求$\sum_k$
+
+$\frac{\partial\ell}{\partial\sum_{k}}=0$得到
+$$
+\Sigma_k=\frac{\sum_{j=1}^m\gamma_{jk}(x^{(j)}-\mu_k)(x^{(j)}-\mu_k)^T}{\sum_{j=1}^m\gamma_{jk}}
+$$
+
+
+##### 求$\alpha_k$
+
+引入拉格朗日乘子，$\sum_k \alpha_k=1$
+$$
+\ell + \lambda(\sum_{k=1}^K \alpha_k -1)
+$$
+得到
+$$
+\alpha_k=\frac{1}{m} \sum_{j=1}^m \gamma_{jk}
+$$
+
+##### 总结
+
+已知
+$$
+p(x)=\sum_{k=1}^K\alpha_kp(x;\mu_k,\Sigma_k)=\sum_{k=1}^Kp(z=k)p(x|z=k)
+$$
+
+$$
+\alpha_k=p(z=k)
+$$
+
+$$
+p(x|z=k)=p(x;\mu_k,\Sigma_k)=\frac{1}{(2\pi)^{n/2}\sqrt{|\Sigma_k|}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)\right)
+$$
+
+$$
+\ell(\theta)=\log\prod_{j=1}^mp(x^{(j)})=\sum_{j=1}^m\log\left(\sum_{k=1}^K\alpha_kp(x^{(j)};\mu_k,\Sigma_k)\right)
+$$
+
+在测试时计算出：
+$$
+p(z^{(j)}=k|x^{(j)})=\frac{p(x^{(j)}|z^{(j)}=k)p(z^{(j)}=k)}{\sum_lp(x^{(j)}|z^{(j)}=l)p(z^{(j)}=l)}=\frac{\alpha_kp(x^{(j)};\mu_k,\Sigma_k)}{\sum_l\alpha_lp(x^{(j)};\mu_l,\Sigma_l)}
+$$
+计算上式需要求得$\theta$，$\theta$的最佳组合是：
+$$
+\theta^{*}=\arg\max_{\theta}\ell(\theta)
+$$
+通过拉格朗日乘数法，求偏导得到参数：
+$$
+\mu_k=\frac{\sum_{j=1}^m\gamma_{jk}x^{(j)}}{\sum_{j=1}^m\gamma_{jk}}
+$$
+
+$$
+\Sigma_k=\frac{\sum_{j=1}^m\gamma_{jk}(x^{(j)}-\mu_k)(x^{(j)}-\mu_k)^T}{\sum_{j=1}^m\gamma_{jk}}
+$$
+
+$$
+\alpha_k=\frac{1}{m} \sum_{j=1}^m \gamma_{jk}
+$$
+
+### Expection Maximization
+
+
+
+
+
 
 
 
