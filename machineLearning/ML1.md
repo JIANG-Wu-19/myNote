@@ -1930,11 +1930,16 @@ f(tx_1+(1-t)x_2)\lt tf(x_1)+(1-t)f(x_2)
 $$
 矢量则Hessian矩阵H半正定$H \gt 0$
 
-凸函数中
+严格凸函数中
 $$
-E(f(X)) \ge f(E(X))
+E(f(X)) = f(E(X))
 $$
 
+当且仅当
+$$
+X=E(X)
+$$
+对于上述逆反命题成立
 
 ### K-means
 
@@ -2127,6 +2132,64 @@ $$
 $$
 
 ### Expection Maximization
+
+期望最大化
+
+给定m互相独立的训练样本集$\{x^{(1)},\dots,x^{(m)}\}$，期望得到模型的最优参数，采用最大似然估计进行求解，隐变量$z^{(i)}$无法直接进行优化
+
+* 采用策略：构建一个损失函数下界（E），优化下界（M）
+
+![image-20231208161731660](E:\myNote\machineLearning\img\93.png)
+$$
+\ell(\theta)=\sum_{i}\log p(x^{(i)};\theta)\geq\sum_{i}\sum_{z^{(i)}}Q_{i}(z^{(i)})\log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_{i}(z^{(i)})}
+$$
+![image-20231208162015653](E:\myNote\machineLearning\img\95.png)
+
+![image-20231208161916929](E:\myNote\machineLearning\img\94.png)
+
+#### GMM-EM
+
+##### E-step
+
+$$
+\gamma_{ik}=Q_{i}(z^{(i)}=k)=p(z^{(i)}=k|x^{(i)};\theta)=p(z^{(i)}=k|x^{(i)};\alpha,\mu,\Sigma),
+$$
+
+##### M-step
+
+$$
+\begin{gathered}
+\sum_{i=1}^{m}\sum_{z^{(i)}}Q_{i}(z^{(i)})\log\frac{p(x^{(i)},z^{(i)};\alpha,\mu,\Sigma)}{Q_{i}(z^{(i)})} \\
+=\sum_{i=1}^{m}\sum_{k=1}^{K}Q_{i}(z^{(i)}=k)\log\frac{p(x^{(i)}|z^{(i)}=k;\mu,\Sigma)p(z^{(i)}=k;\alpha)}{Q_{i}(z^{(i)}=k)} \\
+=\sum_{i=1}^{m}\sum_{k=1}^{K}\gamma_{ik}\log\frac{\frac{1}{(2\pi)^{n/2}|\Sigma_{k}|^{1/2}}\exp\left(-\frac{1}{2}\big(x^{(i)}-\mu_{k}\big)^{T}\Sigma_{k}^{-1}\big(x^{(i)}-\mu_{k}\big)\right)\cdot\alpha_{k}}{\gamma_{ik}} 
+\end{gathered}
+$$
+
+###### $\mu$
+
+$$
+\begin{aligned}
+& \frac{\partial}{\partial\mu_{l}}\sum_{i=1}^{m}\sum_{k=1}^{K}\gamma_{ik}\log\frac{\frac{1}{(2\pi)^{n/2}|\Sigma_{k}|^{1/2}}\exp\left(-\frac{1}{2}(x^{(i)}-\mu_{k})^{T}\Sigma_{k}^{-1}(x^{(i)}-\mu_{k})\right)\cdot\alpha_{k}}{\gamma_{ik}}  \\
+&=\quad-\frac{\partial}{\partial\mu_{l}}\sum_{i=1}^{m}\sum_{k=1}^{K}\gamma_{ik}\frac{1}{2}(x^{(i)}-\mu_{k})^{T}\Sigma_{k}^{-1}(x^{(i)}-\mu_{k}) \\
+&=\quad\frac{1}{2}\sum_{i=1}^{m}\gamma_{il}\frac{\partial}{\partial\mu_{l}}(2\mu_{l}^{T}\Sigma_{l}^{-1}x^{(i)}-\mu_{l}^{T}\Sigma_{l}^{-1}\mu_{l}) \\
+&=\quad\sum_{i=1}^m\gamma_{il}\left(\Sigma_l^{-1}x^{(i)}-\Sigma_l^{-1}\mu_l\right)=0
+\end{aligned}
+$$
+
+得到
+$$
+\mu_{l}:=\frac{\sum_{i=1}^{m}\gamma_{il}x^{(i)}}{\sum_{i=1}^{m}\gamma_{il}},
+$$
+
+###### $\alpha$
+
+$$
+\begin{aligned}\mathcal{L}(\alpha)&=\sum_{i=1}^m\sum_{k=1}^K\gamma_{ik}\log\alpha_k+\beta(\sum_{k=1}^K\alpha_k-1),\\\\\frac{\partial}{\partial\alpha_k}\mathcal{L}(\alpha)&=\sum_{i=1}^m\frac{\gamma_{ik}}{\alpha_k}+\beta=0\end{aligned}
+$$
+
+$$
+\alpha_{k}:=\frac{1}{m}\sum_{i=1}^{m}\gamma_{ik}.
+$$
 
 
 
