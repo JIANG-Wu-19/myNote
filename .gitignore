@@ -2,8 +2,11 @@
 **/.idea
 **/*.lnk
 
+
 computerArchitecture/lab/*.exe
 computerArchitecture/lab/report/*.pdf
 computerArchitecture/lab/report/*.docx
+
+computerArchitecture/ppt/
 
 machineLearning/**/.ipynb_checkpoints
