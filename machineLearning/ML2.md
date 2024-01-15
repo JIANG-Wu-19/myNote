@@ -247,6 +247,31 @@ a manifold is a topological space that locally resembles Euclidean space near ea
 
 ![image-20231220230230186](img/120.png)
 
+## 强化学习
+
+![image-20240108232300380](E:\myNote\machineLearning\img\121.png)
+
+强化学习的特性
+
+* Reward delay
+
+![image-20240108232513891](E:\myNote\machineLearning\img\122.png)
+
+## 系统设计与应用
+
+### 错误分析/算法评估
+
+![image-20240108234426103](E:\myNote\machineLearning\img\123.png)
+$$
+\begin{aligned}
+&精准率precision=\frac{TP}{\hat{P}}=\frac{TP}{TP+FP} \\
+&召回率recall=\frac{TP}{P}=\frac{TP}{TP+FN} \\
+&特异度specificity=\frac{TN}{N}=\frac{TN}{FP+TN} \\
+&正确率accuracy =\frac{TP+TN}{P+N} 
+\end{aligned}
+$$
+![image-20240108234937224](E:\myNote\machineLearning\img\124.png)
+
 ## lyx的总结
 
 复习重点
