@@ -1,0 +1,996 @@
+# 408数据结构
+
+## 绪论
+
+### 基本概念
+
+#### 概念术语
+
+* 数据是信息的载体
+* 数据元素是数据的基本单位
+* 数据项构成数据元素的不可分割的最小单位
+* 数据对象是数据元素集合
+* 数据类型
+  * 原子类型
+  * 结构类型
+  * 抽象数据类型
+* 数据结构包括三方面
+  * 逻辑结构
+  * 存储结构
+  * 数据的运算
+
+#### 数据结构三要素
+
+1. 逻辑结构
+
+   数据元素之间的逻辑关系
+
+   * 集合
+   * 线性结构
+   * 树形结构
+   * 网状结构/图状结构
+
+2. 存储结构
+
+   计算机中的表示 映像
+
+   * 顺序存储
+   * 链式存储
+   * 索引存储
+   * 散列存储/哈希存储
+
+3. 数据的运算
+
+   定义针对逻辑结构
+
+   操作针对存储结构
+
+### 算法和算法评价
+
+#### 算法的基本概念
+
+算法的重要特性：
+
+1. 有穷性
+2. 确定性
+3. 并行性
+4. 输入
+5. 输出
+
+#### 算法效率的度量
+
+1. 时间复杂度
+   $$
+   T(n)=O(f(n))
+   $$
+   存在$C,n_0$使得当$n \ge n_0$，满足$0 \le T(n) \le Cf(n)$
+
+   大O表示法$\lim_{n \to \infin} \frac{T(n)}{f(n)}=k$
+
+   * 加法规则：
+
+     $T(n)=T_1(n)+T_2(n)=O(f(n))+O(g(n))=O(\max (f(n),g(n)))$
+
+   * 乘法规则：
+
+     $T(n)=T_1(n) \times T_2(n)=O(f(n)) \times O(g(n)))=O(f(n) \times g(n))$
+
+   * 渐进时间复杂度
+     $$
+     \mathrm{O(1)<O(\log n)<O(n)<O(n\log_2n)<O(n^2)<O(n^3)<O(2^n)<O(n!)<O(n^n)}
+     $$
+
+   最坏时间复杂度 大O表示法
+
+   平均时间复杂度 
+
+   最好时间复杂度 $\Omega$表示法
+
+2. 空间复杂度
+   $$
+   S(n)=O(g(n))
+   $$
+
+## 线性表
+
+### 线性表的定义和基本操作
+
+#### 线性表的定义
+
+线性表是具有**相同数据类型**的n个数据元素的有限序列
+$$
+L=(a_1,a_2,\dots,a_n)
+$$
+a1为表头元素，an为表尾元素
+
+除了第一个元素外，每个元素有且仅有一个直接前驱
+
+除最后一个元素外，每个元素有且仅有一个直接后继
+
+特点
+
+* 表中元素个数有限
+* 具有逻辑上的顺序性
+* 每个元素都是单个数据元素
+* 数据类型相同
+* 抽象性
+
+线性表是一种逻辑结构
+
+顺序表/链表是一种存储结构
+
+#### 线性表的基本操作
+
+* `InitList(&L)`初始化表
+* `Length(L)`表长
+* `LocateElem(L,e)`按值查找
+* `GetElem(L,i)`按位查找
+* `ListInsert(&L,i,e)`插入操作
+* `ListDelete(&L,i,&e)`删除并返回值操作
+* `PrintList(L)`打印表操作
+* `Empty(L)`判空操作
+* `DestroyList(&L)`销毁操作
+
+### 线性表的顺序表示
+
+#### 顺序表的定义
+
+线性表的顺序存储又称顺序表
+
+用一组地址连续的存储单元
+
+设表的起始位置为$LOC(A)$，则ai的存储位置为$LOC(A)+(i-1)\times sizeof(ElemType)$
+
+静态分配
+
+```c++
+#define MaxSize 50
+typedef struct{
+    Elemtype data[MaxSize];
+    int length;
+}SqList;
+```
+
+存储空间是静态的
+
+动态分配
+
+```c++
+#define InitSize 100
+typedef struct{
+    ElemType *data;
+    int MaxSize,length;
+}SeqList;
+```
+
+```c++
+//初始化
+L.data=(ElemType*)malloc(sizeof(ElemType)*InitSize)//c
+L.data=new ElemType[InitSize];//c++
+```
+
+顺序表最主要的特点就是随机访问，可在$O(1)$中找到指定的元素
+
+#### 顺序表上基本操作的实现
+
+1. 插入操作
+
+   ```c++
+   bool ListInsert(SqList& L,int i,ElemType e){
+       if(i<1||i>L.length+1){
+           return false;
+       }
+       if(L.length>=MaxSize){
+           return false;
+       }
+       for(int j=L.length;j>=i;j--){
+           L.data[j]=L.data[j-1];
+       }
+       L.data[i-1]=e;
+       L.length++;
+       return true;
+   }
+   ```
+
+   时间复杂度是$O(n)$
+
+2. 删除操作
+
+   将该位元素提取然后覆盖即可
+
+   ```c++
+   bool ListDelete(SqList& L,int i,EmelType& e){
+       if(i<1||i>L.length+1){
+           return false;
+       }
+       e=L.data[i-1];
+       for(int j=i;j<L.length;j++){
+           L.data[j]=L.data[j+1];
+       }
+       L.length--;
+       return true'
+   }
+   ```
+
+   时间复杂度是$O(n)$
+
+3. 按值查找
+
+   ```c++
+   int LocateElem(SqList L,Elemtype e){
+       int i;
+       for(i=0;i<L.length;i++){
+           if(L.data[i]==e)
+               return i+1;
+       }
+       return -1;
+   }
+   ```
+
+   时间复杂度是$O(n)$
+
+4. 按位查找
+
+   ```c++
+   ElemType GetElem(SqList L,int i){
+       if(i<1||i>L.length+1){
+           return false;
+       }
+       return L.data[i-1];
+   }
+   ```
+
+   时间复杂度是$O(1)$
+
+### 线性表的链式表示
+
+#### 单链表的定义
+
+线性表的链式存储称为单链表
+
+用一组任意的存储单元来存储线性表中的数据元素
+
+为了建立数据元素之间的线性关系，对于每个链表结点，除了存放自身信息，还需要一个指向后继的节点
+
+```c++
+typedef struct LNode{
+    ElemType data;
+    struct LNode *next;
+}LNode,*LinkList;
+```
+
+设置两个别名，LNode作为链表结点，LinkList作为链表
+
+不管带不带头结点，头指针始终指向链表的第一个结点
+
+头结点是链表中的第一个结点
+
+#### 单链表上基本操作的实现
+
+带头结点
+
+1. 头插法建立链表
+
+   ```c++
+   typedef struct LNode{
+       ElemType data;
+       struct LNode *next;
+   }LNode,*LinkList;
+   
+   LinkList List_HeadInsert(LinkList &L){
+       LNode* s,ElemType x;
+       //初始化链表
+       L=(LinkList)malloc(sizeof(LNode));
+       L->next=NULL;
+       
+       scanf("%d",&x);
+       while(x!=end){
+           s=(LNode*)malloc(sizeof(LNode));
+           s->data=x;
+           s->next=L->next;
+           L->next=s;
+           scan("$d",&x);
+       }
+       return L;
+   }
+   ```
+
+   头插的要点
+
+   ```c++
+   s->data=x;
+   s->next=L->next;
+   L->next=s;
+   ```
+
+   * 如果不带头结点，每一次都要将新结点的地址赋给头结点
+
+2. 尾插法建立链表
+
+   ```c++
+   LinkList List_TailInsert(LinkList &L){
+       ElemType x;
+       L=(LinkList)malloc(sizeof(LNode));
+       //r作尾结点
+       LNode *s,*r=L;
+       
+       scan("%d",&x);
+       while(x!=end){
+           s=(LNode*)malloc(sizeof(LNode));
+           s->data=x;
+           
+           //插入表的尾部
+           r->next=s;
+           //将新结点的地址赋给尾结点
+           r=s;
+           scan("%d",&x);
+       }
+       r->next=NULL;
+       return L;
+   }
+   ```
+
+3. 按序号查找结点
+
+   ```c++
+   LNode* GetElem(LinkList L,int i){
+       if(i<1)
+           return NULL;
+       int j-1;
+       LNode* p=L->next;
+       while(p&&j<i){
+           p=p->next;
+           j++;
+       }
+       return p;
+   }
+   ```
+
+   时间复杂度是$O(n)$
+
+4. 按值查找结点
+
+   ```c++
+   LNode* LocateELem(LinkList L,ElemType e){
+       LNode *p=L->next;
+       while(p&&p->data!=e)
+           p=p->next;
+       return p;
+   }
+   ```
+
+   时间复杂度是$O(n)$
+
+5. 按位序插入结点
+
+   找到前一个结点，然后再进行插入，后插操作实现
+
+   ```c++
+   LNode* GetElem(LinkList L,int i){
+       if(i<1)
+           return NULL;
+       int j-1;
+       LNode* p=L->next;
+       while(p&&j<i){
+           p=p->next;
+           j++;
+       }
+       return p;
+   }
+   
+   bool ListInsert(LinkList &L,ElemType e,int i){
+       LNode *p=GetElem(L,i-1);
+       if(!p)
+           return false;
+       LNode *s=(LNode*)malloc(sizeof(LNode));
+       s->data=e;
+       
+       //关键操作
+       s->next=p->next;
+       p->next=s;
+       
+       return true;
+   }
+   ```
+
+6. 前插操作
+
+   将目标结点复制到新结点，将新结点的地址赋给原目标节点的next，然后将欲插入结点的值赋给原目标结点
+
+   ```c++
+   bool InsertPriorNode(LNode *p,ElemType){
+       if(!p)
+           return false;
+       //将目标结点复制到新结点
+       LNode *s=(LNode*)malloc(sizeof(LNode));
+       s->next=p->next;
+       p->next=s;
+       //执行完地址操作再执行数据操作
+       s->data=p->data;
+       p->data=e;
+       return true;
+   }
+   ```
+
+7. 按位序删除
+
+   找到前一个结点，然后再进行删除
+
+   ```c++
+   bool ListDelete(LinkList &L,ine i,ElemType &e){
+       LNode *p=GetElem(L,i-1);
+       if(!p)
+           return false;
+       LNode *q=p->next;
+       e=q->data;
+       p->next=q->next;
+       free(q);
+       return true;
+   }
+   ```
+
+8. 按元素删除
+
+   给出结点然后删除该结点，类似于直接覆盖
+
+   ```c++
+   bool LNodeDelete(LNode *p){
+       LNode *q=p->next;
+       
+       //先数据后地址
+       p->data=q->data;
+       p->next=q->next;
+       
+       free(q);
+       
+       return true;
+   }
+   ```
+
+#### 双链表
+
+双链表有两个指针，分别指向前驱、后继
+
+```c++
+typedef struct DNode{
+    ElemType data;
+    struct DNode *prior,*next;
+}DNode,*DLinkList;
+```
+
+ ```c++
+ bool InitDLinkList(DLinkList &L){
+     L=(DNode*)malloc(sizeof(DNode));
+     if(!L){
+         return false;
+     }
+     L->prior=NULL;
+     L->next=NULL;
+     return true;
+ }
+ ```
+
+1. 双链表的插入
+
+   ```c++
+   bool InsertNextDNode(DNode *p,DNode *s){
+       //p的后面插入s
+       s->next=p->next;
+       p->next->prior=s;
+       //下面两句顺序可以有先后
+       p->next=s;
+       s->prior=p;
+   }
+   ```
+
+2. 双链表的删除
+
+   ```c++
+   bool DeleteNextDNode(DNode *p){
+       if(!p) return false;
+       DNode *q=p->next;
+       if(!q) return false;
+       p->next=q->next;
+       if(q->next!=NULL){
+           q->next->prior=p;
+       }
+       free(q);
+       return true;
+   }
+   ```
+
+遍历的时间复杂度是$O(n)$
+
+#### 循环链表
+
+循环单链表，循环双链表
+
+在定义数据结构的时候是一样的
+
+```c++
+bool InitLinkList(LinkList &L){
+    L=(LNode*)malloc(sizeof(LNode));
+    if(L==NULL){
+        return false;
+    }
+    L->next=L;
+    return true;
+}
+
+bool isEmpty(LinkList L){
+    if(L->next=L){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+```
+
+```c++
+bool InitDLinkList(DLinkList &L{
+    L=(DNode*)malloc(sizeof(DNode));
+    if(L==NULL){
+        return false;
+    }
+    L->prior=L;
+    L->next=L;
+    return true;
+})
+```
+
+#### 静态链表
+
+用数组代替指针
+
+```c++
+#define MaxSize 50
+typedef struct{
+    ElemType data;
+    int next;
+}SLinkList[MaxSize];
+```
+
+等价于
+
+```c++
+#define MaxSize 50
+struct Node{
+    ElemType data;
+    int next;
+};
+typedef struct Node SLinkList[MaxSize]
+```
+
+适用于不支持指针的高级语言
+
+`next==-1`是链表尾
+
+增删查改只需要修改next的数组下标
+
+#### 顺序表和链表的比较
+
+##### 逻辑结构
+
+都属于线性表，线性结构
+
+##### 存储结构
+
+顺序表采用顺序存储，物理地址连续
+
+链表逻辑上相邻但是物理地址不一定相邻
+
+##### 增删查改
+
+**初始化**
+
+顺序存储需要一次性预分配大片连续空间
+
+链式表只需要分配一个头结点
+
+**销毁**
+
+**增删**
+
+顺序表链表都是$O(n)$，链表效率更高
+
+**查找**
+
+按位顺序表$O(1)$，链表也是$O(n)$
+
+按值顺序表在有序情况下可干到$O(\log _2 n)$
+
+![image-20240311122830697](imgs/1.png)
+
+表长难以估计，经常要增删元素 使用链表
+
+表长可预估，查询操作较多 使用顺序表
+
+## 栈、队列和数组
+
+### 栈
+
+#### 栈的基本概念
+
+##### 栈的定义
+
+栈是只允许**在一端进行插入或删除操作**的线性表
+
+栈顶 线性表允许进行插入删除的一端
+
+栈底 固定的，不允许进行插入和删除的另一端
+
+空栈 不含任何元素的空表
+
+栈的操作特性是LIFO 后进先出
+
+栈的数学性质
+
+n个不同元素进栈，出栈元素不同排列的个数位$\frac{1}{n+1} C_{2n}^n$
+
+##### 栈的基本操作
+
+* `InitStack(&S)`初始化
+* `StackEmpty(S)`判空
+* `Push(&S,x)`进栈
+* `Pop(&S,&x)`出栈
+* `GetTop(S,&x)`读栈顶元素
+* `DestroyStack(&S)`销毁栈
+
+#### 栈的顺序存储结构
+
+##### 顺序栈的实现
+
+```C++
+#define MaxSize 50
+typedef struct{
+    ElemType data[MaxSize];
+    int top;
+}SqStack;
+```
+
+**初始化**
+
+设置`S.top=-1`
+
+栈顶元素`S.data[S.top]`
+
+进栈：`S.data[++S.top]=x`
+
+##### 顺序栈的基本运算
+
+1. 初始化
+
+   ```C++
+   void InitStack(SqStack &S){
+       S.top=-1;
+   }
+   ```
+
+2. 判空
+
+   ```c++
+   bool EmptyStack(SqStack S){
+       if(S.top==-1)
+           return true;
+       else
+           return false;
+   }
+   ```
+
+3. 进栈
+
+   ```c++
+   bool Push(SqStack &S,ElemType x){
+       if(S.top==MaxSize-1)
+           return false;
+       else
+           S.data[++S.top]=x;
+       return true;
+   }
+   ```
+
+4. 出栈
+
+   ```c++
+   bool Pop(SqStack &S,ElemType &x){
+       if(EmptyStack(S))
+           return false;
+       x=S.data[S.top--];
+       return true;
+   }
+   ```
+
+5. 读栈顶元素
+
+   ```c++
+   bool GetTop(SqStack S,ElemType &x){
+       if(EmptyStack(S))
+           return false;
+       x=S.data[S.top];
+       return true;
+   }
+   ```
+
+##### 共享栈
+
+利用栈底位置相对不变的特性，让两个顺序栈共享一个一维数组，将两栈底设置在数组两端
+
+top0=-1 栈0空
+
+top1=MaxSize 栈1空
+
+top1-top0=1 栈满
+
+#### 栈的链式存储
+
+链栈 不会溢出 所有操作都在表头
+
+```c++
+typedef struct Linknode{
+    ElemType data;
+    struct Linknode *next;
+}*LiStack;
+```
+
+### 队列
+
+#### 队列的基本概念
+
+##### 队列的定义
+
+队列是只允许在表的一端进行插入，另一端删除的特殊线性表
+
+操作特性 FIFO 先进先出
+
+队头 允许删除的一端
+
+队尾 允许插入的一端
+
+##### 队列常见的基本操作
+
+* `InitQueue(&S)`初始化
+* `QueueEmpty(S)`判空
+* `EnQueue(&S,x)`入队
+* `DeQueue(&S,&x)`出队
+* `GetHead(S,&x)`读队头元素
+
+*栈和队列的中间元素都不可以随便读取*
+
+#### 队列的顺序存储结构
+
+##### 顺序存储
+
+```c++
+#define MaxSize 50
+typedef struct{
+    ElemType data[MaxSize];
+    int front,rear;
+}SqQueue;
+```
+
+顺序队列可能会存在假溢出
+
+##### 循环队列
+
+初始化`Q.front=Q.rear=0`
+
+队首指针进1`Q.front=(Q.front+1)%MaxSize`
+
+队尾指针进1`Q.rear=(Q.rear+1)%MaxSize`
+
+出队：队尾指针顺时针进1
+
+入队：队首指针顺时针进1
+
+
+
+区分队空和队满的情况
+
+1. 牺牲一个单元区分队空、队满，入队时少用一个队列单元
+
+   规定：队头指针在队尾指针的下一位置作为队满的标志
+
+   `(Q.rear+1)%MaxSize==Q.front`队满
+
+   `Q.front==Q.rear`队空
+
+   `(Q.rear-Q.front+MaxSize)%MaxSize`队列元素个数
+
+2. 增设元素个数的数据成员`Q.size`
+
+3. 增设`tag`区分队空队满
+
+##### 循环队列的操作
+
+1. 初始化
+
+   ```c++
+   void InitQueue(SqQueue &Q){
+       Q.rear=Q.front=0;
+   }
+   ```
+
+2. 判空
+
+   ```c++
+   bool isEmpty(SqQueue Q){
+       if(Q.front==Q.rear) return true;
+       else return false;
+   }
+   ```
+
+3. 入队
+
+   ```c++
+   bool EnQueue(SqQueue &Q,ElemType x){
+       if((Q.rear+1)%MaxSize==Q.front) return false;
+       Q.data[Q.rear]=x;
+       Q.rear=(Q.rear+1)%MaxSize;
+       return true;
+   }
+   ```
+
+4. 出队
+
+   ```c++
+   bool DeQueue(SqQueue &Q,ElemType &x){
+       if(Q.rear==Q.front) return false;
+       x=Q.data[Q.front];
+       Q.front=(Q.front+1)%MaxSize;
+       return true;
+   }
+   ```
+
+#### 队列的链式存储结构
+
+##### 链队列
+
+需要两个指针，一个头指针一个尾指针
+
+```c++
+typedef struct LinkNode{
+    ElemType data;
+    struct LinkNode *next;
+}LinkNode;
+typedef struct{
+    LinkNode *front,*rear;
+}*LinkQueue;
+```
+
+`Q.front==Q.front==NULL`的时候队列为空
+
+##### 链式队列的基本操作
+
+1. 初始化
+
+   ```c++
+   void InitQueue(LinkQueue &Q){
+       Q.front=Q.rear=(LinkNode*)malloc(sizeof(LinkNode));
+       Q->front->next=NULL;
+   }
+   ```
+
+2. 判空
+
+   ```C++
+   bool isEmpty(LinkQueue Q){
+       if(Q.front==Q.rear) return true;
+       else return false;
+   }
+   ```
+
+3. 入队
+
+   ```c++
+   void EnQueue(LinkQueue &Q,ElemType x){
+       LinkNode *s=(LinkNode*)malloc(sizeof(LinkNode));
+       s->data=x;
+       s->next=NULL;
+       Q.rear->next=s;
+       Q.rear=s;
+   }
+   ```
+
+4. 出队
+
+   ```c++
+   bool DeQueue(LinkQueue &Q,ElemType &x){
+       if(Q.front==Q.rear) return false;
+       LinkNode *p=Q.front->next;
+       x=p->data;
+       Q.front->next=p->next;
+       if(Q.rear==p)
+           Q.rear=Q.front;
+       free(p);
+       return true
+   }
+   ```
+
+#### 双端队列
+
+顾名思义就是两头都可进出
+
+受限制的是两头都可进，但是一头可出
+
+* 考点就是给出一个序列，看能不能由某种特殊双端序列实现
+
+### 栈和队列的应用
+
+#### 栈在括号匹配中的应用
+
+#### 栈在表达式求值中的应用
+
+#### 栈在递归中的应用
+
+#### 队列在层次遍历中的应用
+
+#### 队列在计算机系统中的应用
+
+### 数组和特殊矩阵
+
+#### 数组的定义
+
+一维数组是一个线性表
+
+二维数组是一个元素为线性表的线性表
+
+#### 数组的存储结构
+
+一维数组
+$$
+LOC(a_i)=LOC(a_0)+i \times L
+$$
+二维数组
+
+行优先
+$$
+LOC(a_{i,j})=LOC(a_{0,0})+[i \times(h_2+1)+j] \times L
+$$
+列优先
+$$
+LOC(a_{i,j})=LOC(a_{0,0})+[j \times(h_1+1)+i] \times L
+$$
+
+#### 特殊矩阵的压缩存储
+
+##### 对称矩阵
+
+存一半
+$$
+k=\frac{i(i-1)}{2}+j-1,i \ge j
+$$
+
+$$
+k=\frac{j(j-1)}{2}+i-1,i \lt j
+$$
+
+##### 三角矩阵
+
+下三角矩阵
+$$
+k=\frac{i(i-1)}{2}+j-1,i \ge j
+$$
+
+$$
+k=\frac{n(n+1)}{2} ,i \lt j
+$$
+
+上三角矩阵
+$$
+k=\frac{(i-1)(2n-i+2)}{2}+(j-i)
+$$
+
+$$
+k=\frac{n(n+1)}{2} ,i \lt j
+$$
+
+##### 三对角矩阵
+
+$$
+k=2i+j-3
+$$
+
+#### 稀疏矩阵
+
+三元组或者十字链表法

@@ -1,6 +1,7 @@
 **/*.pdf
 **/.idea
 **/*.lnk
+**/*.ppt
 
 
 computerArchitecture/lab/*.exe
