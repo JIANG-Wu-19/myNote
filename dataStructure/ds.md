@@ -1273,6 +1273,8 @@ int GetHeight( BinTree BT ){
 
 常见遍历有先序，中序，后序
 
+递归算法
+
 ##### 先序遍历
 
 1. 根
@@ -1288,4 +1290,284 @@ void PreOrder(BiTree T){
     }
 }
 ```
+
+##### 中序遍历
+
+1. 左
+2. 根
+3. 右
+
+```c++
+void InOrder(BiTree T){
+    if(T){
+        InOrder(T->lchild);
+        visit(T);
+        InOrder(T->rchild);
+    }
+}
+```
+
+##### 后序遍历
+
+1. 左
+2. 右
+3. 根
+
+```c++
+void PostOrder(BiTree T){
+    if(T){
+        PostOrder(T->lchild);
+        PostOrder(T->rchild);
+        visit(T);
+    }
+}
+```
+
+##### 非递归算法
+
+中序
+
+```c++
+void InOrder2(BiTree T){
+    InitStack(S);
+    BiTree p=T;
+    while(p||!IsEmpty(S)){
+        if(p){
+            Push(S,p);
+            p=p->lchild;
+        }
+        else{
+            Pop(S,p);
+            visit(p);
+            p=p->rchild;
+        }
+    }
+}
+```
+
+先序
+
+```c++
+void PreOrder2(BiTree T){
+    InitStack(S);
+    BiTree p=T;
+    while(p||!IsEmpty(S)){
+        if(p){
+            visit(p);
+            Push(S,p);
+            p=p->lchild;
+        }
+        else{
+            Pop(S,p);
+            p=p->rchild;
+        }
+    }
+}
+```
+
+##### 层次遍历
+
+借助队列实现同层所有遍历完成再进入下一层
+
+```c++
+void LevelOrder(BiTree T){
+    InitQueue(Q);
+    BiTree p;
+    EnQueue(Q,T);
+    while(!IsEmpty(Q)){
+        DeQueue(Q,p);
+        visit(p);
+        if(p->lchild){
+            EnQueue(Q,p->lchild);
+        }
+        if(p->rchild){
+            EnQueue(Q,p->rchild);
+        }
+    }
+}
+```
+
+##### 由遍历序列构造二叉树
+
+先序+中序
+
+后序+中序
+
+层序+中序
+
+只知道先序和后序是无法唯一确定二叉树的
+
+#### 线索二叉树
+
+##### 线索二叉树的基本概念
+
+若无左子树，令lchild指向其前驱结点；
+
+若无右子树，令rchild指向其后继结点；
+
+```c++
+typedef struct ThreadNode{
+    ElemType data;
+    struct ThreadNode *lchild,*rchild;
+    iny ltag,rtag;
+}ThreadNode,*ThreadTree;
+```
+
+##### 中序线索二叉树的构造
+
+通过中序遍历对二叉树线索化
+
+```c++
+void InThread(ThreadTree &p,ThreadTree &pre){
+    if(p){
+        InThread(p->lchild,pre);
+        if(p->lchild==NULL){
+            p->lchild=pre;
+            p->ltag=1;
+        }
+        if(pre&&pre->rchild==NULL){
+            pre->rchild=p;
+            pre->rtag=1;
+        }
+        pre=p;
+        InThread(p->rchild,pre)''
+    }
+}
+```
+
+```c++
+void CreateInThread(ThreadTree T){
+    ThreadTree pre=NULL;
+    if(T){
+        InThread(T,pre);
+        pre->rchild=NULL;
+        pre->rtag=1;
+    }
+}
+```
+
+##### 中序线索二叉树的遍历
+
+1. 找到中序的第一个结点
+
+   ```c++
+   ThreadNode *FirstNode(ThreadNode *p){
+       while(p->ltag==0) p=p->lchild;
+       return p;
+   }
+   ```
+
+2. 找到结点的后继
+
+   ```c++
+   ThreadNode *NextNode(ThreadNode *p){
+       if(p->rtag==0) return FirstNode(p);
+       else return p->rchild;
+   }
+   ```
+
+3. 遍历算法
+
+   ```c++
+   void InOrder(ThreadNode *T){
+       for(ThreadNode *p=FirstNode(T);p;p=NextNode(p)){
+           visit(p);
+       }
+   }
+   ```
+
+### 树和森林
+
+#### 树的存储结构
+
+##### 双亲表示法
+
+```c++
+#define MAX_TREE_SIZE 100
+typedef struct{
+    ElemType data;
+    int parent;
+}PTNode;
+typedef struct{
+    PTNode nodes[MAX_TREE_SIZE];
+    int n;
+}PTree;
+```
+
+##### 孩子表示法
+
+##### 孩子兄弟表示法
+
+#### 树、森林与二叉树的转换
+
+#### 树和森林的遍历
+
+### 树与二叉树的应用
+
+#### 哈夫曼树与哈夫曼编码
+
+##### 哈夫曼树的定义
+
+带权路径长度
+$$
+WPL=\sum_{i=1}^n w_i l_i
+$$
+哈夫曼树的WPL最小
+
+##### 哈夫曼树的构造
+
+1. 将n个结点分别作为n棵仅含一个结点的二叉树，构成森林F
+2. 构造一个新结点，在F中选取两棵权值最小的树作为新结点的左右子树，并且将新结点权值置为左右子树根结点权值之和
+3. 从F中删除那两棵树，将新树加入F中
+4. 重复2、3直到F只剩一棵树
+
+##### 哈夫曼编码
+
+没有一个编码是另一个编码的前缀，则称这样的编码为前缀编码
+
+#### 并查集
+
+并查集是一种简单的集合表示，支持三种操作
+
+1. `Inittial(S)`将S中的每个元素都初始化为只有一个单元素的子集合
+2. `Union(S,Root1,Root2)`将S中的子集合R2并入R1，要求R1和R2不相交
+3. `Find(S,x)`查找S中单元素x所在子集合，返回根结点
+
+定义并查集
+
+```c++
+#define SIZE 100
+int UFsets[SIZE];
+```
+
+初始化S
+
+```c++
+void Initial(int S[]){
+    for(int i=0;i<SIZE;i++){
+        S[i]=-1;
+    }
+}
+```
+
+Find
+
+```c++
+int Find(int S[],int x){
+    while(S[x]>0)
+        x=S[x];
+    return x;
+}
+```
+
+Union
+
+```c++
+void Union(int S[],int Root1,int Root2){
+    if(Root1==Root2) return;
+    S[Root2]=Root1;
+}
+```
+
+
 
