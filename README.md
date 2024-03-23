@@ -14,3 +14,9 @@ Due to my bad md grammar, the formula in my notes can be rightly compiled only i
 * 机器学习 machineLearning
 * 软件工程 softwareEngineering
 
+## 大三下 junior spring
+
+* 人工智能 Artificial Intelligence
+* 嵌入式系统 embeddedSystem
+* 计算机网络(复习) computerNetwork(review)
+* 数据结构(复习) dataStructure(review)
