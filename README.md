@@ -18,5 +18,6 @@ Due to my bad md grammar, the formula in my notes can be rightly compiled only i
 
 * 人工智能 Artificial Intelligence
 * 嵌入式系统 embeddedSystem
+* Linux系统及应用 Linux
 * 计算机网络(复习) computerNetwork(review)
 * 数据结构(复习) dataStructure(review)

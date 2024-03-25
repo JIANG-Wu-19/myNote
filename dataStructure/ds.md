@@ -1569,5 +1569,11 @@ void Union(int S[],int Root1,int Root2){
 }
 ```
 
+## 图
+
+### 图的基本概念
+
+#### 图的定义
+
 
 
