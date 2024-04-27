@@ -127,7 +127,7 @@
 
       * 嵌入式操作系统分为实时操作系统和非实时操作系统。下面主要讲实时操作系统的概念。
 
-      ![image-20240322192009665](E:\myNote\embeddedSystem\imgs\2.png)
+      ![image-20240322192009665](imgs/2.png)
 
    4. 几种主流的嵌入式操作系统
       * µC/OS-II：教学的免费、面向中小型嵌入式系统应用。
@@ -284,7 +284,7 @@ ARM采用RISC结构，在简化处理器结构，减少复杂功能指令的同�
 
 为了进一步提高指令和数据的存取速度，RISC型处理器增加了指令高速缓冲I-Cache和数据高速缓冲D-Cache及多处理器结构，使指令的操作尽可能在寄存器之间进行。
 
-![image-20240407203724231](E:\myNote\embeddedSystem\imgs\3.png)
+![image-20240407203724231](imgs/3.png)
 
 #### Thumb指令集
 
@@ -345,15 +345,15 @@ ARM体系结构具有协处理器接口，允许接16个协处理器。既可以
 2. 译码：指令译码。(占用译码逻辑)
 3. 执行：执行指令/读写REG。(占用ALU及数据路径)
 
-![image-20240417144652487](E:\myNote\embeddedSystem\imgs\4.png)
+![image-20240417144652487](imgs/4.png)
 
 实际情况下，ARM7的构架中，执行和取值都需要访问存储空间，但是一次只能有一个访问（注意下图阴影，为存储访问），这就导致了流水线间断。这是冯.诺依曼架构的局限，指令和数据总线复用，因此ARM9改为哈弗构架。
 
-![image-20240417144730366](E:\myNote\embeddedSystem\imgs\5.png)
+![image-20240417144730366](imgs/5.png)
 
 #### ARM9TDMI的五级流水线
 
-![image-20240417144758045](E:\myNote\embeddedSystem\imgs\6.png)
+![image-20240417144758045](imgs/6.png)
 
 1. 回写和访存可以同时进行
 2. PC仍然是执行地址+8（下下条指令）
@@ -377,7 +377,7 @@ ARM体系结构具有协处理器接口，允许接16个协处理器。既可以
 ARM微控制器使用的是AMBA总线体系结构
 AMBA（Advanced Microcontroller Bus Architecture）是ARM公司公布的总线标准，先进的AMBA规范定义了三种总线：
 
-![image-20240417171352531](E:\myNote\embeddedSystem\imgs\7.png)
+![image-20240417171352531](imgs/7.png)
 
 #### SPI总线
 
@@ -387,13 +387,13 @@ AMBA（Advanced Microcontroller Bus Architecture）是ARM公司公布的总线�
 * 通常需要两根信号线，用于收发数据
 * 通常需要使用使能线，用于指定通信设备（或用地址识别）
 
-![image-20240420193615953](E:\myNote\embeddedSystem\imgs\8.png)
+![image-20240420193615953](imgs/8.png)
 
 #### CAN总线
 
 CAN总线：差分信号、同步时钟、竞争式、去中心化、速度慢、结构简单、可靠高、距离远
 
-![image-20240420193654818](E:\myNote\embeddedSystem\imgs\9.png)
+![image-20240420193654818](imgs/9.png)
 
 #### AHB总线（Advanced High-performance Bus）：
 
@@ -513,7 +513,7 @@ ARM指令集和Thumb指令集均有切换处理器状态的指令，并可在两
 
 处理器启动时的模式转换图
 
-![image-20240427163835995](E:\myNote\embeddedSystem\imgs\10.png)
+![image-20240427163835995](imgs/10.png)
 
 系统模式并不是通过异常进入的，它和用户模式具有完全一样的寄存器。但是系统模式属于特权模式，可以访问所有的系统资源，也可以直接进行处理器模式切换。 
 
@@ -553,15 +553,15 @@ ARM将存储器看作是从零地址开始的字节的线性组合。作为32位
 
 这样，就存在一个所存储的字或半字数据的排列顺序问题。ARM体系结构可以用两种方法存储字数据，称为大端格式和小端格式 。
 
-![image-20240427165805891](E:\myNote\embeddedSystem\imgs\11.png)
+![image-20240427165805891](imgs/11.png)
 
 大端格式(big-endian)：字数据的高字节存储在低地址中，而字数据的低字节则存放在高地址中。0123为例
 
-![image-20240427165837346](E:\myNote\embeddedSystem\imgs\12.png)
+![image-20240427165837346](imgs/12.png)
 
 小端格式(low-endian)：与大端存储格式相反。低地址中存放的是字数据的低字节，高地址存放的是字数据的高字节。缺省设置为小端格式。
 
-![image-20240427165858868](E:\myNote\embeddedSystem\imgs\13.png)
+![image-20240427165858868](imgs/13.png)
 
 优缺点
 
@@ -583,7 +583,7 @@ ARM将存储器看作是从零地址开始的字节的线性组合。作为32位
 
 多级存储器系统
 
-![image-20240427184648633](E:\myNote\embeddedSystem\imgs\14.png)
+![image-20240427184648633](imgs/14.png)
 
 ### 寄存器组织 
 
