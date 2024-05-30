@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}实验目的}{2}{section.1}%
+\contentsline {section}{\numberline {2}实验内容}{2}{section.2}%
+\contentsline {section}{\numberline {3}实验方法}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}实验原理}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}试验方案及调试过程}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {4}实验步骤}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}准备实验环境}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}串口接收设置}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}打开实验例程}{12}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}观察实验结果}{13}{subsection.4.4}%
+\contentsline {section}{\numberline {5}实验结果}{13}{section.5}%
+\contentsline {section}{\numberline {6}实验结论}{13}{section.6}%
+\contentsline {section}{\numberline {7}实验小结}{13}{section.7}%
+\contentsline {section}{\numberline {8}实验2源代码}{14}{section.8}%

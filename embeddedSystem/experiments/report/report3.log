@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.21)  29 MAY 2024 15:25
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.21)  29 MAY 2024 10:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**report
-(./report.tex
+**report3
+(./report3.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24> (d:/texlive/2022/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
@@ -454,183 +454,92 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@cntb=\count328
 \multirow@dima=\skip68
 \bigstrutjot=\dimen270
-) (d:/texlive/2022/texmf-dist/tex/latex/tabularray/tabularray.sty
-Package: tabularray 2022-03-01 v2022A Typeset tabulars and arrays with LaTeX3
-\l__tblr_a_int=\count329
-\l__tblr_c_int=\count330
-\l__tblr_r_int=\count331
-\l__tblr_d_dim=\dimen271
-\l__tblr_h_dim=\dimen272
-\l__tblr_o_dim=\dimen273
-\l__tblr_p_dim=\dimen274
-\l__tblr_q_dim=\dimen275
-\l__tblr_r_dim=\dimen276
-\l__tblr_s_dim=\dimen277
-\l__tblr_t_dim=\dimen278
-\l__tblr_v_dim=\dimen279
-\l__tblr_w_dim=\dimen280
-\l__tblr_a_box=\box60
-\l__tblr_b_box=\box61
-\l__tblr_c_box=\box62
-\l__tblr_d_box=\box63
-\g__tblr_table_count_int=\count332
-\c@rownum=\count333
-\c@colnum=\count334
-\c@rowcount=\count335
-\c@colcount=\count336
-\abovesep=\dimen281
-\belowsep=\dimen282
-\leftsep=\dimen283
-\rightsep=\dimen284
-\g_tblr_level_int=\count337
-\g__tblr_data_row_key_count_int=\count338
-\g__tblr_data_column_key_count_int=\count339
-\g__tblr_data_cell_key_count_int=\count340
-\g__tblr_array_int=\count341
-\l__tblr_key_count_int=\count342
-\l__tblr_key_quotient_int=\count343
-\l__tblr_key_quotient_two_int=\count344
-\l__tblr_key_remainder_int=\count345
-\g__tblr_data_str_value_count_int=\count346
-\rulewidth=\dimen285
-\l__tblr_strut_ht_box=\box64
-\l__tblr_strut_dp_box=\box65
-\g__tblr_cell_wd_dim=\dimen286
-\g__tblr_cell_ht_dim=\dimen287
-\g__tblr_cell_head_dim=\dimen288
-\g__tblr_cell_foot_dim=\dimen289
-\l__column_target_dim=\dimen290
-\l__tblr_caption_box=\box66
-\l__tblr_caption_left_box=\box67
-\l__tblr_row_head_box=\box68
-\l__tblr_row_foot_box=\box69
-\l__tblr_row_head_foot_dim=\dimen291
-\tablewidth=\dimen292
-\l__tblr_table_firsthead_box=\box70
-\l__tblr_table_middlehead_box=\box71
-\l__tblr_table_lasthead_box=\box72
-\l__tblr_table_firstfoot_box=\box73
-\l__tblr_table_middlefoot_box=\box74
-\l__tblr_table_lastfoot_box=\box75
-\l__tblr_remain_height_dim=\dimen293
-\l__tblr_long_from_int=\count347
-\l__tblr_long_to_int=\count348
-\l__tblr_curr_i_int=\count349
-\l__tblr_prev_i_int=\count350
-\l__tblr_table_page_int=\count351
-\l__tblr_table_head_box=\box76
-\l__tblr_table_foot_box=\box77
-\l__tblr_table_head_foot_dim=\dimen294
-\l__tblr_table_head_body_foot_dim=\dimen295
-\l__tblr_table_box=\box78
-\l__tblr_table_hlines_box=\box79
-\l__tblr_hline_box=\box80
-\l__tblr_row_box=\box81
-\l__tblr_col_o_wd_dim=\dimen296
-\l__tblr_col_b_wd_dim=\dimen297
-\l__tblr_hline_leftskip_dim=\dimen298
-\l__tblr_hline_rightskip_dim=\dimen299
-\l__tblr_row_ht_dim=\dimen300
-\l__tblr_row_dp_dim=\dimen301
-\l__tblr_row_abovesep_dim=\dimen302
-\l__tblr_row_belowsep_dim=\dimen303
-\l__tblr_row_vlines_box=\box82
-\l__tblr_vline_box=\box83
-\l__tblr_cell_box=\box84
-\l__row_upper_dim=\dimen304
-\l__row_lower_dim=\dimen305
-\l__row_vpace_dim=\dimen306
-\l__tblr_vline_aboveskip_dim=\dimen307
-\l__tblr_vline_belowskip_dim=\dimen308
-\l__tblr_cell_wd_dim=\dimen309
-\l__tblr_cell_ht_dim=\dimen310
-\l__tblr_diag_box=\box85
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 32.
-Package hyperref Info: Option `breaklinks' set `true' on input line 32.
+Package hyperref Info: Option `colorlinks' set `true' on input line 31.
+Package hyperref Info: Option `breaklinks' set `true' on input line 31.
  (d:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
-) (./report.aux)
-\openout1 = `report.aux'.
+) (./report3.aux)
+\openout1 = `report3.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
 
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
 \symlegacymaths=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 68.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 68.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 68.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 68.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 68.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 68.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 68.
-LaTeX Font Info:    Redeclaring math accent \check on input line 68.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 68.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 68.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \colon on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 68.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 68.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 68.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 67.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 67.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 67.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 67.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 67.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 67.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 67.
+LaTeX Font Info:    Redeclaring math accent \check on input line 67.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 67.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 67.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \colon on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 67.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 67.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 68.
+(Font)              `operators' in the math version `normal' on input line 67.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 68.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 67.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 68.
+(Font)              `operators' in the math version `bold' on input line 67.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 68.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 67.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 68.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 68.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 68.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 68.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 68.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 67.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 68.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 68.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 68.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 67.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 68.
-Package hyperref Info: Link coloring ON on input line 68.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 67.
+Package hyperref Info: Link coloring ON on input line 67.
  (d:/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (d:/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -638,14 +547,14 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (d:/texlive/2022/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count352
+\c@section@level=\count329
 )
-LaTeX Info: Redefining \ref on input line 68.
-LaTeX Info: Redefining \pageref on input line 68.
-LaTeX Info: Redefining \nameref on input line 68.
- (./report.out) (./report.out)
+LaTeX Info: Redefining \ref on input line 67.
+LaTeX Info: Redefining \pageref on input line 67.
+LaTeX Info: Redefining \nameref on input line 67.
+ (./report3.out) (./report3.out)
 \@outlinefile=\write3
-\openout3 = `report.out'.
+\openout3 = `report3.out'.
 
  (d:/texlive/2022/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
@@ -654,7 +563,7 @@ Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 )
-\c@lstlisting=\count353
+\c@lstlisting=\count330
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -690,103 +599,44 @@ Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf, page 1>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf, page 1>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf, page 1>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf, page 1>
+File: cover3.pdf Graphic file (type pdf)
+<use cover3.pdf, page 1>
 [1
 
-] [0] (./report.toc
+] [0] (./report3.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 2.
+(Font)              <12> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 2.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 2.
- [1])
+(Font)              <6> on input line 4.
+)
 \tf@toc=\write4
-\openout4 = `report.toc'.
+\openout4 = `report3.toc'.
 
- [2] [3] [4]
-File: imgs/1.jpg Graphic file (type bmp)
-<imgs/1.jpg>
- [5] [6] [7] [8] [9]
-File: imgs/2.png Graphic file (type bmp)
-<imgs/2.png>
- [10] [11] [12]
-File: imgs/3.png Graphic file (type bmp)
-<imgs/3.png>
-File: imgs/4.png Graphic file (type bmp)
-<imgs/4.png>
- [13] [14]
-File: imgs/5.png Graphic file (type bmp)
-<imgs/5.png>
-File: imgs/6.png Graphic file (type bmp)
-<imgs/6.png>
-File: imgs/7.png Graphic file (type bmp)
-<imgs/7.png>
- [15]
-File: imgs/8.png Graphic file (type bmp)
-<imgs/8.png>
- [16]
-File: imgs/9.png Graphic file (type bmp)
-<imgs/9.png>
-File: imgs/10.png Graphic file (type bmp)
-<imgs/10.png>
- [17]
-File: imgs/11.png Graphic file (type bmp)
-<imgs/11.png>
- [18]
-Missing character: There is no � (U+FFFD) in font [lmroman10-regular]:mapping=tex-text;!
-[19] [20] [21] [22] [23] [24]
-File: imgs/12.png Graphic file (type bmp)
-<imgs/12.png>
- [25]
-> Step: init table outer spec.
-> Step: parse table options.
-> Step: split table.
-> Step: init table inner spec.
-> Step: parse table inner spec.
-> Step: execute table commands.
-> Step: calculate cell and line sizes.
-> Step: build the whole table.
- [26] [27] [28] [29] [30] [31]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 1092.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1092.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mu' on input line 1092.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1092.
-
-[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] (./report.aux)
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: E84EE28B0E3F09601E9F5D82F45E97B6;6376.
+ [1] [2] [3] [4] [5] (./report3.aux)
+Package rerunfilecheck Info: File `report3.out' has not changed.
+(rerunfilecheck)             Checksum: 201EE8B7920BADF0914692A91AF4D2A7;832.
  ) 
 Here is how much of TeX's memory you used:
- 20020 strings out of 476179
- 431081 string characters out of 5813071
- 1216036 words of memory out of 5000000
- 40501 multiletter control sequences out of 15000+600000
- 476710 words of font info for 69 fonts, out of 8000000 for 9000
+ 17123 strings out of 476179
+ 353736 string characters out of 5813071
+ 1173447 words of memory out of 5000000
+ 37624 multiletter control sequences out of 15000+600000
+ 474181 words of font info for 63 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 89i,17n,98p,365b,1861s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,17n,97p,366b,2340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on report.pdf (57 pages).
+Output written on report3.pdf (7 pages).

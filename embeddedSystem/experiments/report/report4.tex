@@ -1,0 +1,139 @@
+﻿\documentclass[UTF8,12pt]{article}
+\usepackage{ctex}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{afterpage}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+\geometry{a4paper,scale=0.8}
+
+\newcommand\myemptypage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+}
+
+\hypersetup{
+    hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true
+}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  language=Octave,                % the language of the code
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*,...}               % if you want to add more keywords to the set
+}
+
+
+\setlength{\parindent}{2em}
+
+\begin{document}
+
+\begin{titlepage}
+    \includepdf[pages={1}]{cover4.pdf}
+\end{titlepage}
+
+\myemptypage
+
+\begin{center}
+    \tableofcontents
+\end{center}
+
+\newpage
+
+% 一、实验目的
+% 指出此次实验应该达到的学习目标。
+% 二、实验内容
+% 指出此次实验应完成的任务。
+% 三、实验方法
+% 包括实验方法、原理、技术、方案等。
+% 四、实验步骤
+% 指出完成该实验的操作步骤。
+% 五、实验结果
+% 记录实验输出数据和结果。
+% 六、实验结论
+% 对实验数据和结果进行分析描述，给出实验取得的成果和结论。
+% 注：有程序的要求附上程序源代码，有图表的要有截图并有相应的文字说明和分析
+% 七、实验小结
+% 给出本次实验的体会，如学会了什么，遇到哪些问题，如何解决这些问题，存在哪些有待改进的地方。
+
+实验学时：2
+
+每组人数：3
+
+实验类别：2\ （1：基础性\ 2：综合性\ 3：设计性\ 4：研究性）
+
+实验要求：1\ （1：必修\ 2：选修\ 3：其它）
+
+实验类别：3\ （1：基础\ 2：专业基础\ 3：专业\ 4：其它）
+
+\section{实验目的}
+
+
+\section{实验内容}
+
+
+\section{实验方法}
+\subsection{实验原理}
+
+
+\subsection{试验方案及调试过程}
+
+
+\section{实验步骤}
+
+
+
+\section{实验结果}
+
+\section{实验结论}
+
+
+\section{实验小结}
+
+
+\newpage
+
+\section{实验3源代码}
+\begin{lstlisting}[frame=shadowbox]
+
+\end{lstlisting}
+
+\end{document}

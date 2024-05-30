@@ -12,6 +12,7 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{tabularray}
 
 \geometry{a4paper,scale=0.8}
 
@@ -638,7 +639,7 @@ uint16_t gap_delay=2000;
   如图中所示，STM32F746芯片的PC13外接上拉电路，串联开关S3的Center（对应五向导航键S3的确定功能）后接地。由于I/O口外接上拉电路，所以在对I/O口进行初始化时可设置为浮空输入。开关S3断开时，PC13输入高电平；反之，PC13输入低电平。所以，当按下开关S3时，PC13输入由高变低，产生一个下降沿；当释放开关S3时，PC13输入由低变高，产生一个上升沿。根据外部中断触发条件设置，当满足所需的边沿条件时，触发中断，MCU响应中断点亮/熄灭发光二极管D1。
 \end{enumerate}
 
-\subsubsection{试验方案及调试过程}
+\subsubsection{实验方案及调试过程}
 \noindent
 \textbf{基础实验}：本实验的实验例程（STM32F746\_Experiment\_v1.1/03\_EXTI）
 
@@ -844,16 +845,247 @@ int main(void)
 实验类别：3\ （1：基础\ 2：专业基础\ 3：专业\ 4：其它）
 
 \subsection{实验目的}
+\begin{enumerate}
+  \item 掌握UART串口的工作原理；
+  \item 掌握Cortex-M7的UART串口配置方法；
+  \item 通过实验掌握printf()函数重定向的方法；
+  \item 通过实验掌握Cortex-M7串口通信及调试方法；
+  \item 掌握Cortex-M7定时器的工作原理；
+  \item 掌握Cortex-M7定时器的配置及初始化方法；
+  \item 通过实验掌握定时器中断的设置和使用方法；
+  \item 通过实验掌握定时器中断的响应流程。
+\end{enumerate}
 
 \subsection{实验内容}
+\begin{enumerate}
+  \item 引导输入功能：编译运行，超级终端可以通过Uart接收到ARM板子回传的信息，要求用户输入一串数字（浮点数或整数）
+  \item 实时回显功能：ARM接收到用户的每个字符，需要将本字符在回传到超级终端，使得用户可以看到自己输入的字符，按下回车键，ARM程序开始处理用户输入字符串，如果不是数字字符（小数或整数）则回显提示错误；如果是数字字符开始执行后面功能；
+  \item 数字识别功能：将用户输入的字符串，识别成具体的数字，这个数字表示LED灯闪烁的时间间隔。
+  \item 灯光闪烁频率（单位Hz）控制：以上面收到的数据去设定定时器，控制LED灯的闪烁间隔。示例：用户输入1，1Hz表示那么LED灯应该1S完成一次亮灭循环，也就是亮0.5s灭0.5s，如此循环往复
+\end{enumerate}
 
 \subsection{实验方法}
+\subsubsection{实验原理}
+\begin{enumerate}
+  \item UART通信协议
+  
+  UART（Universal Asynchronous Receiver and Transmitter）通用异步收发器是异步串行通信接口的总称，支持RS-232、RS-422、RS-485等接口标准规范和总线标准规范。
+
+  UART作为异步串口通信协议的一种，工作原理是将传输数据的每个字符一位接一位的传输其中每一位(Bit)的意义如下：
+  \begin{itemize}
+    \item 起始位：先发出一个逻辑“0”的信号，表示传输字符的开始。
+    \item 数据位：紧接着起始位之后。数据位的个数可以是4、5、6、7、8等，构成一个字符。从最低位开始传送，靠时钟定位
+    \item 奇偶校验位：数据位加上这一位后，使得“1”的位数应为偶数(偶校验)或奇数(奇校验)，以此来校验数据传送的正确性。
+    \item 停止位：它是一个字符数据的结束标志。可以是1位、1.5位、2位的高电平。由于数据是在传输线上定时的，并且每一个设备有其自己的时钟，很可能在通信中两台设备间出现了小小的不同步。因此停止位不仅仅是表示传输的结束，并且提供计算机校正时钟同步的机会。适用于停止位的位数越多，不同时钟同步的容忍程度越大，但是数据传输率同时也越慢。
+    \item 空闲位：处于逻辑“1”状态，表示当前线路上没有数据传送
+  \end{itemize}
+  UART协议传输时序如图所示
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{imgs/12.png}
+    \caption{UART协议传输时序}
+  \end{figure}
+
+  发送数据过程：空闲状态，线路处于高电位；当收到发送数据指令后，拉低线路一个数据位的时间T，接着数据按低位到高位依次发送，数据发送完毕后，接着发送奇偶校验位和停止位（停止位为高电位），一帧数据发送结束。
+
+  发送数据过程：空闲状态，线路处于高电位；当收到发送数据指令后，拉低线路一个数据位的时间T，接着数据按低位到高位依次发送，数据发送完毕后，接着发送奇偶校验位和停止位（停止位为高电位），一帧数据发送结束。
+
+  波特率是衡量数据传输速率的指标，表示每秒传送数据的字符数，单位为Baud。UART的接收和发送是按照相同的波特率进行收发的。波特率发生器产生的时钟频率不是波特率时钟频率，而是波特率时钟频率的16倍，目的是为在接收时进行精确地采样，以提取出异步的串行数据。根据给定的晶振时钟和要求的波特率，可以算出波特率分频计数值。
+
+  \item printf()函数重定向
+  
+  标准库函数的默认输出设备是显示器，因此必须对重新定义printf()函数中与串口输出相关的函数，才能通过调用printf()函数向串口发送数据。
+
+  使用以下代码可以完成printf()函数的重定义：
+  
+  \begin{lstlisting}[frame=shadowbox]
+    #ifdef __GNUC__
+/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
+/* Retargets the C library printf function to the UART */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the COM1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&Uart_Handle, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+
+  \end{lstlisting}
+
+  由于GNU编译器中printf()调用的是putchar()函数执行底层输出任务，所以前半段代码使用宏定义可以兼容不同编译器。
+
+  后半段即重定义过程，使用HAL\_UART\_Transmit()函数完成fputc()或putchar()函数的底层输出任务。HAL\_UART\_Transmit()函数的具体定义可以在实验例程“03\_U
+  ART”中查看
+
+  \item 定时器
+  
+  Cortex-M7具有2个高级控制定时器、10个通用定时器、2个基本定时器和2个看门狗定时器。特性对比如表所示
+
+  \begin{table}
+    \centering
+    \begin{tblr}{
+      cell{3}{1} = {r=6}{},
+      vlines,
+      hline{1-3,9-10} = {-}{},
+      hline{4-8} = {2-5}{},
+    }
+    定时器类型   & 定时器         & 位数 & 计数模式      & 分频系数                      \\
+    高级控制定时器 & TIM1,TIM8   & 16 & 递增，递减，增/减 & 1\textasciitilde{}65536之间 \\
+    通用定时器   & TIM2,TIM5   & 32 & 递增，递减，增/减 & 1\textasciitilde{}65536之间 \\
+            & TIM3,TIM4   & 16 & 递增，递减，增/减 & 1\textasciitilde{}65536之间 \\
+            & TIM9        & 16 & 递增        & 1\textasciitilde{}65536之间 \\
+            & TIM11,TIM10 & 16 & 递增        & 1\textasciitilde{}65536之间 \\
+            & TIM12       & 16 & 递增        & 1\textasciitilde{}65536之间 \\
+            & TIM13,TIM14 & 16 & 递增        & 1\textasciitilde{}65536之间 \\
+    基本定时器   & TIM6,TIM7   & 16 & 递增        & 1\textasciitilde{}65536之间 
+    \end{tblr}
+    \end{table}
+
+    下面以实验例程中所用的通用定时器为例，介绍Cortex-M7中定时器的主要功能和用法
+
+    \item 通用定时器
+    
+    通用定时器包含一个16位或32位自动重载计数器，该计数器由可编程预分频器驱动。它们可用于多种用途，包括测量输入信号的脉冲宽度（输入捕获）或生成输出波形（输出比较和PWM）。
+
+    使用定时器预分频器和RCC时钟控制器预分频器，可将脉冲宽度和波形周期从几微秒调制到几毫秒
+
+    这些定时器彼此完全独立，不共享任何资源。
+
+    通用 TIMx 定时器具有以下特性：
+    \begin{itemize}
+      \item 16 位（TIM3 和 TIM4）或 32 位（TIM2 和 TIM5）递增、递减和递增/递减自动重载计数器。
+      \item 16 位可编程预分频器，用于对计数器时钟频率进行分频（可在运行时修改），分频系数介于 1 到 65535 之间。
+      \item 多达 4 个独立通道，可用于
+      \begin{itemize}
+        \item 输入捕获
+        \item 输出比较
+        \item PWM 生成（边沿和中心对齐模式）
+        \item 单脉冲模式输出
+      \end{itemize}
+      \item 使用外部信号控制定时器且可实现多个定时器互连的同步电路。
+      \item 发生如下事件时生成中断/DMA 请求：
+      \begin{itemize}
+        \item 更新：计数器上溢/下溢、计数器初始化（通过软件或内部/外部触发）
+        \item 触发事件（计数器启动、停止、初始化或通过内部/外部触发计数）
+        \item 输入捕获
+        \item 输出比较
+      \end{itemize}
+      \item 支持定位用增量（正交）编码器和霍尔传感器电路
+      \item 触发输入作为外部时钟或者逐周期电流管理
+    \end{itemize}
+
+    本实验例程中使用定时器的时基单元功能，即定时功能
+
+    可编程定时器的主要模块由一个 16 位/32 位计数器及其相关的自动重装寄存器组成。计数器可递增计数、递减计数或同时递增和递减计数。计数器的时钟可通过预分频器进行分频。计数器、自动重载寄存器和预分频器寄存器可通过软件进行读写。即使在计数器运行时也可执行读写操作。
+
+    时基单元包括：
+
+    \begin{itemize}
+      \item 计数器寄存器 (TIMx\_CNT)
+      \item 预分频器寄存器 (TIMx\_PSC)
+      \item 自动重载寄存器 (TIMx\_ARR)
+    \end{itemize}
+
+    本实验中采用递增计数模式，计数器从0计数到自动重载值（TIMx\_ARR寄存器的内容），然后重新从0开始计数并生成计数器上溢事件，即定时器中断。
+
+    若采用递减计数模式，计数器从自动重载值（TIMx\_ARR寄存器的内容）开始递减计数到0，然后重新从自动重载值开始计数并生成计数器下溢事件。
+
+    计数器由预分频器输出 CK\_CNT 提供时钟，仅当 TIMx\_CR1 寄存器中的计数器启动位(CEN)置1时，才会启动计数器
+
+    预分频器说明：
+
+    预分频器可对计数器时钟频率进行分频，分频系数介于 1 和 65536 之间。该预分频器基于16 位/32 位寄存器（TIMx\_PSC 寄存器）所控制的 16 位计数器。由于该控制寄存器具有缓冲功能，因此预分频器可实现实时更改。而新的预分频比将在下一更新事件发生时被采用。定时器频率计算方法及定时器中断原理定时器3频率计算方法如下：
+
+    TIMER3时钟频率（TIM3CLK）为APB1总线时钟频率（PCLK1）的2倍，APB1总线时钟频率为系统时钟的1/4，
+
+    即
+
+    $TIM3CLK = 2 * PCLK1$
+
+    $PCLK1 = SystemCoreClock / 4$
+
+    所以$TIM3CLK  =  SystemCoreClock / 2$
+
+    本实验例程中需要将TIMER3时钟频率配置为10KHz，由于采用递增计数模式，预分频计算方式如下：
+
+    $Prescaler  =  ( TIM3CLK / TIM3 counter clock ) - 1$
+
+    $Prescaler  =  ( ( SystemCoreClock / 2 ) / ( 10KHz ) - 1$
+
+    所以在对定时器3初始化时，需要按照以上方法计算预分频数值
+\end{enumerate}
+
+\subsubsection{实验方案及调试过程}
+
+本实验要求通过超级终端输入闪烁频率（单位Hz），LED灯按设定频率闪烁，可连续输入数字改变频率。
+
+具体的算法思路如下：
+
+从UART串口中接收数据，调用printf()函数将接收到的数据回传到超级终端，将接收到的字符判断是否合规，不合规的字符通过printf()函数回传错误信息，实现“引导输入”、“实时回显”功能，合规的字符转换为数字，并存储到栈中
+
+\begin{lstlisting}[frame=shadowbox]
+HAL_UART_Receive(&UartHandle,(uint8_t*)&uRxBuffer,1,TIMEOUT);
+      printf("%c",uRxBuffer);
+      if(uRxBuffer!='\r'&&uRxBuffer!='\n'){
+        if((uRxBuffer>='0'&&uRxBuffer<='9')||uRxBuffer=='.'){
+          stack[store]=uRxBuffer;
+          store++;
+        }else{
+          printf("\n\r INPUT ERROR! \n\r");
+          break;
+        }
+      }  
+\end{lstlisting}
+接收到的合法小数字符数组通过sscanf函数解析成浮点数，根据公式计算值计算ARR值
+
+\begin{lstlisting}[frame=shadowbox]
+  HAL_UART_Receive(&UartHandle,(uint8_t*)&uRxBuffer,1,TIMEOUT);
+      printf("%c",uRxBuffer);
+      if(uRxBuffer!='\r'&&uRxBuffer!='\n'){
+        if((uRxBuffer>='0'&&uRxBuffer<='9')||uRxBuffer=='.'){
+          stack[store]=uRxBuffer;
+          store++;
+        }else{
+          printf("\n\r INPUT ERROR! \n\r");
+          break;
+        }
+      }
+\end{lstlisting}
+使用定时器 Tim3 配置中断，控制灯光的闪烁频率，完成程序功能。
+
+\begin{lstlisting}[frame=shadowbox]
+  Timer_Config(ARRValue);
+
+  HAL_TIM_Base_Start_IT(&TimHandle);
+\end{lstlisting}
 
 \subsection{实验步骤}
+\subsubsection{准备实验环境}
+使用ULINK2 USB-JTAG仿真器连接ARM Cortex-M7实验板与PC，实验板一侧接右下方的P1接口。使用串口线，连接实验板右侧的串口J3和PC机的串口。
+
+\subsubsection{串口接收设置}
+在PC机上运行windows自带的超级终端串口通信程序（波特率115200 、1位停止位、无校验位、无硬件流控制）；或者使用其它串口通信程序。
+
+\subsubsection{打开实验例程}
+拷贝实验平台附带程序“05\_TIMER”，使用$\mu$Vision IDE for ARM通过ULINK2 USB-JTAG仿真器连接实验板，打开工程文件，编译链接工程，对工程进行配置，点击MDK的Project菜单，选择Rebuild all target files进行编译，编译成功后，点击Debug菜单，选择Start/Stop Debug Session项或点击工具栏中的 图标，下载工程生成的.axf 文件到目标板的 RAM中调试运行。
+
+\subsubsection{观察实验结果}
+观察PC中超级终端显示信息，根据提示使用键盘输入数据，MCU接收到数据后对TIMER3的TIM3\_ARR寄存器进行相应配置并完成定时器中断的初始化。初始化结束后开启TIMER3开始计时，产生定时器中断后对LED执行跳变操作，即观察到LED以高或低频率闪烁。
+
+\subsection{实验结果}
 
 \subsection{实验结论}
+本实验中，我们在while循环中通过Uart通信协议逐字符接收消息并回显在超级终端上，并使用sscanf()函数将数字字符转化为double型变量使得程序可以接收小数；通过设置定时器让LED灯持续闪烁，当下一次输入新值后会重新设置LED灯闪烁频率，达到程序目的。实验源代码见附录。
 
 \subsection{实验小结}
+通过本实验，我掌握了Cortex-M7的UART串口配置方法，串口通信及调试方法，并学习了定时器中断的设置和使用方法，熟悉了定时器中断的响应流程，同时进一步熟悉了C语言嵌入式编程，感受到嵌入式系统应用的魅力所在，收获很大。
 
 \newpage
 
@@ -870,16 +1102,191 @@ int main(void)
 实验类别：3\ （1：基础\ 2：专业基础\ 3：专业\ 4：其它）
 
 \subsection{实验目的}
+\begin{enumerate}
+  \item 掌握$\mu$C/OS-III操作系统中信号量的创建方法；
+  \item 通过实验掌握$\mu$C/OS-III系统中使用信号量进行任务间通信的方法。
+\end{enumerate}
 
 \subsection{实验内容}
+用$\mu$C/OS-III系统的信号量机制实现按下按键LED灯闪烁，松开按键停止闪烁。在实验过程中学习$\mu$C/OS-III操作系统中信号量的创建和使用方法，在实验中注意观察LED的闪烁以及串口数据的变化情况，掌握使用信号量进行任务间通信的方法。
 
 \subsection{实验方法}
 
+\subsubsection{实验原理}
+
+\begin{enumerate}
+  \item 信号量
+  
+  信号量是在多任务环境下使用的一种设施，是可以用来保证两个或多个关键代码段不被并发调用。在进入一个关键代码段之前，线程必须获取一个信号量；一旦该关键代码段完成了，那么该线程必须释放信号量。其它想进入该关键代码段的线程必须等待直到第一个线程释放信号量。为了完成这个过程，需要创建一个信号量Semaphore，然后将获取Semaphore以及释放Semaphore的代码分别放置在每个关键代码段的首末端。
+
+  抽象的来讲，信号量的特性如下：信号量是一个非负整数，所有使用它的线程/进程都会将该整数减一，当该整数值为零时，所有试图使用它的线程都将处于等待状态。在信号量上我们定义两种操作： Wait（等待） 和 Release（释放）。当一个线程调用Wait操作时，它要么得到资源然后将信号量减一，要么一直等下去（指放入阻塞队列），直到信号量大于等于一时。Release（释放）实际上是在信号量上执行加操作，该操作之所以叫做“释放”是因为释放了由信号量守护的资源。
+
+  在$\mu$C/OS-III中，使用OSSemCreate函数可以创建一个信号量，其原型如下：
+
+  \begin{lstlisting}[frame=shadowbox]
+void  OSSemCreate (OS_SEM  *p_sem, 
+CPU_CHAR  *p_name,
+OS_SEM_CTR  cnt,
+OS_ERR  *p_err) 
+
+  \end{lstlisting}
+  使用OSSemPend函数可以获取一个信号量，若获取到信号量，则任务继续执行，否则该挂起该任务，直到该任务获取到信号量或超时。OSSemPend函数的原型如下：
+
+  \begin{lstlisting}[frame=shadowbox]
+OS_SEM_CTR  OSSemPend (OS_SEM   *p_sem,
+OS_TICK   timeout,
+OS_OPT    opt,
+CPU_TS   *p_ts,
+OS_ERR   *p_err)
+  \end{lstlisting}
+  使用OSSemPost函数可以释放一个信号量，其原型如下：
+
+  \begin{lstlisting}[frame=shadowbox]
+OS_SEM_CTR  OSSemPost (OS_SEM  *p_sem,
+OS_OPT   opt,
+OS_ERR  *p_err)
+
+  \end{lstlisting}
+
+  \item 实验例程说明
+  \begin{enumerate}
+    \item 系统初始化（HAL库、内存管理模块和数学算法模块的初始化）；
+    \item 创建启动任务AppTaskStart；
+    \item 在启动任务中对BSP和CPU进行初始化；
+    \item 在启动任务中创建通信过程中使用的信号量等对象；
+    \item 在启动任务中创建两个应用任务Task\_A和Task\_B，启动任务进入死循环；
+    \item Task\_A检测S3是否被按下并释放，当S3释放时向Task\_B发送信号量；
+    \item Task\_B等待Task\_A发送来的信号量，当获取到信号量时点亮/熄灭LED1并向串口发送数据。
+  \end{enumerate}
+\end{enumerate}
+
+\subsubsection{实验方案及调试过程}
+本实验要求通过$\mu$C/OS-III操作系统中的信号量机制完成按下按键LED灯高频闪烁，提起按键LED灯熄灭的功能。
+
+具体的算法思路如下：
+
+首先创建等待键盘按键检测的任务和信号量机制相关的操作系统对象，定义任务名为Task A 和Task B
+
+\begin{lstlisting}[frame=shadowbox]
+  static  void  AppTaskCreate (void)
+{
+    OS_ERR  os_err;
+
+/* ---------- 创建应用任务 --------- */
+    OSTaskCreate(&Task_ATCB,
+                 "Kernel Objects Task A",
+                  Task_A,
+                  0,
+                  APP_CFG_TASK_OBJ_PRIO,
+                 &Task_AStk[0],
+                  Task_AStk[APP_CFG_TASK_OBJ_STK_SIZE / 10u],
+                  APP_CFG_TASK_OBJ_STK_SIZE,
+                  0u,
+                  0u,
+                  0,
+                 (OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+                 &os_err);
+
+    OSTaskCreate(&Task_BTCB,
+                 "Kernel Objects Task B",
+                  Task_B,
+                  0,
+                  APP_CFG_TASK_OBJ_PRIO,
+                 &Task_BStk[0],
+                  Task_BStk[APP_CFG_TASK_OBJ_STK_SIZE / 10u],
+                  APP_CFG_TASK_OBJ_STK_SIZE,
+                  0u,
+                  0u,
+                  0,
+                 (OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+                 &os_err);
+}
+
+static  void  AppObjCreate (void)
+{
+    OS_ERR  os_err;
+
+#if (OS_CFG_SEM_EN > 0u)
+    OSSemCreate(&wait_key_sem,
+                "Key Detection",
+                 0u,
+                &os_err);
+    OSSemCreate(&wait_key_sem2,"Key Detection",0u,&os_err);
+#endif
+}
+\end{lstlisting}
+当检测到按键被按下时，任务 Task\_A 会发送信号量 wait\_key\_sem：
+
+\begin{lstlisting}[frame=shadowbox]
+void Task_A(void *p_arg)
+{	   
+	OS_ERR  err;
+	unsigned char key_press = 0;
+
+	while(DEF_TRUE)
+	{
+	// 	OSTimeDly(30, OS_OPT_TIME_DLY, &err);
+    // if (BSP_PB_GetState(BUTTON_TAMPER) == RESET)
+	// 		key_press = 1;
+	// 	if (BSP_PB_GetState(BUTTON_TAMPER) == SET)
+	// 	{
+	// 		if(key_press == 1)
+	// 		{
+	// 			key_press = 0;
+	// 			OSSemPost(&wait_key_sem, OS_OPT_POST_1, &err);
+	// 		}
+	// 	}	
+        OSTimeDly(60, OS_OPT_TIME_DLY, &err);
+				if (BSP_PB_GetState(BUTTON_TAMPER) == RESET){
+            OSSemPost(&wait_key_sem, OS_OPT_POST_1, &err);
+        }
+	}
+}
+\end{lstlisting}
+当任务 Task\_B 接收到信号量信息后，会通过 BSP\_LED\_Toggle(LED1) 函数控制 LED 灯的高速闪烁；且发送信号量任务的系统时钟节拍与接收信号量任务的系统时钟节拍保持一致，从而使得当按键抬起时 LED 灯不再闪烁。具体代码如下：
+
+\begin{lstlisting}[frame=shadowbox]
+void Task_B(void *p_arg)
+{			  
+	OS_ERR  err;
+	CPU_TS  ts;
+
+	while(DEF_TRUE)
+	{
+		OSTimeDly(30, OS_OPT_TIME_DLY, &err);
+		OSSemPend(&wait_key_sem,
+                  0,
+                  OS_OPT_PEND_BLOCKING,
+                  &ts,
+                  &err);
+		BSP_LED_Toggle(LED1);	//Toggle after key release
+        OSTimeDly(30, OS_OPT_TIME_DLY, &err);
+        BSP_LED_Toggle(LED1);
+		APP_TRACE_DBG(("Get a Semaphore from Task A\n\r"));
+	}
+}
+\end{lstlisting}
+
 \subsection{实验步骤}
+\subsubsection{准备实验环境}
+使用ULINK2 USB-JTAG仿真器连接ARM Cortex-M7实验板与PC，实验板一侧接右下方的P1接口。使用串口线，连接实验板右侧的串口J3和PC机的串口。
+
+\subsubsection{串口接收设置}
+在PC机上运行windows自带的超级终端串口通信程序（波特率115200 、1 位停止位、无校验位、无硬件流控制）；或者使用其它串口通信程序。
+
+\subsubsection{打开实验例程}
+拷贝实验平台附带程序“14\_uCOS-III\_Semaphore”，使用$\mu$Vision IDE for ARM通过 ULINK2 USB-JTAG仿真器连接实验板，打开工程文件，编译链接工程，根据本实验指导书中2.3.2小节中“编译配置”部分对工程进行配置（工程默认已经配置正确），点击MDK的Project菜单，选择Rebuild all target files进行编译，编译成功后，点击Debug菜单，选择Start/Stop Debug Session项或点击工具栏中的 图标，下载工程生成的.axf 文件到目标板的 RAM中调试运行。
+
+\subsubsection{观察实验结果}
+我们观察到按下按键LED灯高频闪烁，提起按键LED灯熄灭，说明我们通过$\mu$C/OS-III操作系统中的信号量机制完成了实验需要的功能
+
+\subsection{实验结果}
 
 \subsection{实验结论}
+本实验中，首先创建等待键盘按键检测的应用进程，通过$\mu$C/OS-III操作系统中的信号量机制，实现当接收到按键按下信号后通过 BSP\_LED\_Toggle(LED1)函数控制 LED 灯的高速闪烁，并保持发送信号量任务的系统时钟节拍与接收信号量任务的系统时钟节拍一致，从而当提起按键后LED灯停止闪烁。实验源代码见附录。
 
 \subsection{实验小结}
+通过本实验，我掌握了$\mu$C/OS-III系统中信号量的创建方法和使用信号量进行任务间通信的方法，对C语言嵌入式编程有了更多的认识，直观地了解到信号量机制在嵌入式系统中的广泛用途与应用，收获很大。
 
 \newpage
 
@@ -956,6 +1363,8 @@ int main(void)
   }  
 \end{lstlisting}
 
+\newpage
+
 \subsection{实验2源代码}
 \begin{lstlisting}[frame=shadowbox]
 /**
@@ -1010,6 +1419,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
   }
 }
 \end{lstlisting}
+
+\newpage
 
 \subsection{实验3源代码}
 \begin{lstlisting}[frame=shadowbox]
@@ -1097,6 +1508,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 \end{lstlisting}
+
+\newpage
 
 \subsection{实验4源代码}
 \begin{lstlisting}[frame=shadowbox]

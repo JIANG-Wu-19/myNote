@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}实验目的}{2}{section.1}%
+\contentsline {section}{\numberline {2}实验内容}{2}{section.2}%
+\contentsline {section}{\numberline {3}实验方法}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}实验原理}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}试验方案及调试过程}{2}{subsection.3.2}%
+\contentsline {section}{\numberline {4}实验步骤}{2}{section.4}%
+\contentsline {section}{\numberline {5}实验结果}{2}{section.5}%
+\contentsline {section}{\numberline {6}实验结论}{2}{section.6}%
+\contentsline {section}{\numberline {7}实验小结}{2}{section.7}%
+\contentsline {section}{\numberline {8}实验3源代码}{3}{section.8}%

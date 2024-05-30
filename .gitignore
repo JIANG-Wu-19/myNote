@@ -13,4 +13,4 @@ computerArchitecture/ppt/
 machineLearning/**/.ipynb_checkpoints
 
 embeddedSystem/experiments/report/*.pdf
-embeddedSystem/experiments/report/cover.docx
+embeddedSystem/experiments/report/*.docx
