@@ -14,6 +14,7 @@
 \usepackage{graphicx}
 \usepackage{tabularray}
 
+
 \geometry{a4paper,scale=0.8}
 
 \newcommand\myemptypage{
@@ -373,6 +374,23 @@ uint16_t gap_delay=2000;
 结合实验内容和相关资料，使用一些调试命令，观察程序运行。注意观察发光二极管的亮灭情况，观察到的现象与前面实验内容中的相符，则说明实验程序通过配置GPIO引脚的输出状态实现了对发光二极管的控制。修改代码，实现自己姓氏的摩尔斯电码。
 
 \subsection{实验结果}
+
+开发板中的灯泡呈现不断闪烁的状态，如图所示。同时，实现自己姓氏拼音的电码操作将改变灯泡的亮灭间隔，状态表示同理。
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[状态一：灯泡亮]{
+    \includegraphics[width=0.45\textwidth]{imgs/13.jpg}
+    }
+    \subfigure[状态二：灯泡灭]{
+    \includegraphics[width=0.45\textwidth]{imgs/14.jpg}
+    }
+    \caption{实验结果}
+\end{figure}
+
+
+\newpage
+
 
 \subsection{实验结论}
 本实验中，我们通过HAL\_GPIO\_TogglePin()可以切换LED灯状态，利用异或（XOR）操作取反GPIOx对应位的值，达到反转指定引脚状态的效果；同时，我们可以通过控制HAL\_GPIO\_TogglePin()的间隔来控制亮灯和灭灯的时间，对不同的字符设置不同的间隔时间来实现自己姓氏拼音的电码。实验源代码见附录。
@@ -824,6 +842,11 @@ int main(void)
 
 \subsection{实验结果}
 
+按下按键LED灯高频闪烁
+
+\newpage
+
+
 \subsection{实验结论}
 本实验中，我们首先观察到程序通过将GPIO配置为EXTI的中断源，通过按键开关触发外部中断，MCU响应中断并点亮/熄灭发光二极管。我们配置中断触发方式为上升沿和下降沿，并通过HAL\_GPIO\_ReadPin()读取按键状态，并根据按键状态控制 LED 灯状态，从而完成了实验要求的功能。实验源代码见附录。
 
@@ -1081,6 +1104,18 @@ HAL_UART_Receive(&UartHandle,(uint8_t*)&uRxBuffer,1,TIMEOUT);
 
 \subsection{实验结果}
 
+超级终端显示如下，成功回显了输入的字符
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{imgs/15.png}
+  \caption{超级终端显示}
+\end{figure}
+
+以下是输入1HZ的结果，LED灯每秒闪烁一次
+
+\newpage
+
 \subsection{实验结论}
 本实验中，我们在while循环中通过Uart通信协议逐字符接收消息并回显在超级终端上，并使用sscanf()函数将数字字符转化为double型变量使得程序可以接收小数；通过设置定时器让LED灯持续闪烁，当下一次输入新值后会重新设置LED灯闪烁频率，达到程序目的。实验源代码见附录。
 
@@ -1281,6 +1316,10 @@ void Task_B(void *p_arg)
 我们观察到按下按键LED灯高频闪烁，提起按键LED灯熄灭，说明我们通过$\mu$C/OS-III操作系统中的信号量机制完成了实验需要的功能
 
 \subsection{实验结果}
+
+按下按键LED灯高频闪烁，提起按键LED灯熄灭
+
+\newpage
 
 \subsection{实验结论}
 本实验中，首先创建等待键盘按键检测的应用进程，通过$\mu$C/OS-III操作系统中的信号量机制，实现当接收到按键按下信号后通过 BSP\_LED\_Toggle(LED1)函数控制 LED 灯的高速闪烁，并保持发送信号量任务的系统时钟节拍与接收信号量任务的系统时钟节拍一致，从而当提起按键后LED灯停止闪烁。实验源代码见附录。

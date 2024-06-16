@@ -2,7 +2,13 @@
 **/.idea
 **/*.lnk
 **/*.ppt
-
+**/*.aux
+**/*.log
+**/*.synctex.gz
+**/*.toc
+**/*.mp4
+**/*.zip
+**/*.docx
 
 computerArchitecture/lab/*.exe
 computerArchitecture/lab/report/*.pdf
